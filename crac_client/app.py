@@ -1,20 +1,27 @@
 from crac_protobuf.roof_pb2 import (
     RoofAction,
-    RoofStatus,
-    RoofRequest,
+    RoofResponse,
 )
-from crac_protobuf.roof_pb2_grpc import (
-    RoofStub,
+from crac_protobuf.button_pb2 import (
+    ButtonAction,
+    ButtonType,
+    ButtonResponse,
 )
-import grpc
-
 from crac_client import config, gui
-from crac_client.gui_constants import GuiKey, GuiLabel
+from crac_client.converter.button_converter import ButtonConverter
+from crac_client.converter.roof_converter import RoofConverter
+from crac_client.gui_constants import GuiKey
+from crac_client.retriever.roof_retriever import RoofRetriever
+from crac_client.retriever.button_retriever import ButtonRetriever
 
-channel = grpc.insecure_channel("localhost:50051")
-client = RoofStub(channel)
-# request = RoofRequest(action=RoofAction.OPEN)
-# client.SetAction(request)
+def callback(call_future):
+    response = call_future.result()
+    if isinstance(response, (RoofResponse)):
+        converter = RoofConverter().convert
+    elif isinstance(response, (ButtonResponse)):
+        converter = ButtonConverter().convert
+
+    converter(response, g_ui)
 
 g_ui = gui.Gui()
 while True:
@@ -24,16 +31,18 @@ while True:
     if v is None or v is GuiKey.EXIT or v is GuiKey.SHUTDOWN:
         break
     elif v is GuiKey.CLOSE_ROOF:
-        request = RoofRequest(action=RoofAction.CLOSE)
-        response = client.SetAction(request)
-        if response.status == RoofStatus.ROOF_CLOSED:
-            g_ui.hide_background_image()
-            g_ui.update_status_roof(GuiLabel.ROOF_CLOSED)
-            g_ui.update_enable_button_open_roof()
+        retriever = RoofRetriever()
+        call_future = retriever.setAction(RoofAction.CLOSE)
+        call_future.add_done_callback(callback)
     elif v is GuiKey.OPEN_ROOF:
-        request = RoofRequest(action=RoofAction.OPEN)
-        response = client.SetAction(request)
-        if response.status == RoofStatus.ROOF_OPENED:
-            g_ui.show_background_image()
-            g_ui.update_status_roof(GuiLabel.ROOF_OPEN, text_color="#2c2825", background_color="green")
-            g_ui.update_enable_disable_button()
+        retriever = RoofRetriever()
+        call_future = retriever.setAction(RoofAction.OPEN)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.POWER_ON_TELE:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_ON, ButtonType.TELE_SWITCH)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.POWER_OFF_TELE:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_OFF, ButtonType.TELE_SWITCH)
+        call_future.add_done_callback(callback)

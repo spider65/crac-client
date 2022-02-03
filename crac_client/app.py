@@ -7,12 +7,18 @@ from crac_protobuf.button_pb2 import (
     ButtonType,
     ButtonResponse,
 )
+from crac_protobuf.telescope_pb2 import (
+    TelescopeAction,
+    TelescopeResponse,
+)
 from crac_client import config, gui
 from crac_client.converter.button_converter import ButtonConverter
 from crac_client.converter.roof_converter import RoofConverter
+from crac_client.converter.telescope_converter import TelescopeConverter
 from crac_client.gui_constants import GuiKey
 from crac_client.retriever.roof_retriever import RoofRetriever
 from crac_client.retriever.button_retriever import ButtonRetriever
+from crac_client.retriever.telescope_retriever import TelescopeRetriever
 
 def callback(call_future):
     response = call_future.result()
@@ -20,6 +26,8 @@ def callback(call_future):
         converter = RoofConverter().convert
     elif isinstance(response, (ButtonResponse)):
         converter = ButtonConverter().convert
+    elif isinstance(response, (TelescopeResponse)):
+        converter = TelescopeConverter().convert
 
     converter(response, g_ui)
 
@@ -45,4 +53,40 @@ while True:
     elif v is GuiKey.POWER_OFF_TELE:
         retriever = ButtonRetriever()
         call_future = retriever.setAction(ButtonAction.TURN_OFF, ButtonType.TELE_SWITCH)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.POWER_ON_CCD:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_ON, ButtonType.CCD_SWITCH)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.POWER_OFF_CCD:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_OFF, ButtonType.CCD_SWITCH)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.LIGHT_ON:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_ON, ButtonType.DOME_LIGHT)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.LIGHT_OFF:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_OFF, ButtonType.DOME_LIGHT)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.PANEL_ON:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_ON, ButtonType.FLAT_LIGHT)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.PANEL_OFF:
+        retriever = ButtonRetriever()
+        call_future = retriever.setAction(ButtonAction.TURN_OFF, ButtonType.FLAT_LIGHT)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.SYNC_TELE:
+        retriever = TelescopeRetriever()
+        call_future = retriever.setAction(TelescopeAction.SYNC)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.PARK_TELE:
+        retriever = TelescopeRetriever()
+        call_future = retriever.setAction(TelescopeAction.PARK_POSITION)
+        call_future.add_done_callback(callback)
+    elif v is GuiKey.FLAT_TELE:
+        retriever = TelescopeRetriever()
+        call_future = retriever.setAction(TelescopeAction.FLAT_POSITION)
         call_future.add_done_callback(callback)

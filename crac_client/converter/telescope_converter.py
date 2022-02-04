@@ -16,13 +16,17 @@ class TelescopeConverter:
             g_ui.update_button_sync(disabled=False)
         
         if response.speed == TelescopeSpeed.DEFAULT:
-            pass
+            g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF, text_color="red", background_color="white")
+            g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_OFF, text_color="red", background_color="white")
         elif response.speed == TelescopeSpeed.TRACKING:
-            pass
+            g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_ON, text_color="#2c2825", background_color="green")
+            g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_OFF, text_color="red", background_color="white")
         elif response.speed == TelescopeSpeed.CENTERING:
-            pass
+            g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF, text_color="red", background_color="white")
+            g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_OFF, text_color="red", background_color="white")
         elif response.speed == TelescopeSpeed.SLEWING:
-            pass
+            g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF, text_color="red", background_color="white")
+            g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_ON, text_color="#2c2825", background_color="green")
         
         if response.status == TelescopeStatus.PARKED:
             pass

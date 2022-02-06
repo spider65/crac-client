@@ -15,3 +15,8 @@ class TelescopeRetriever:
         request = TelescopeRequest(action=telescopeAction)
         call_future = client.SetAction.future(request)
         return call_future
+
+    def setImmediateAction(self, telescopeAction: TelescopeAction):
+        request = TelescopeRequest(action=telescopeAction)
+        response = client.SetAction(request)
+        return response

@@ -1,7 +1,7 @@
 
 from crac_protobuf.telescope_pb2 import (
     TelescopeStatus,
-    TelescopeSpeed
+    TelescopeSpeed,
 )
 from crac_client.gui_constants import GuiLabel
 
@@ -29,25 +29,19 @@ class TelescopeConverter:
             g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_ON, text_color="#2c2825", background_color="green")
         
         if response.status == TelescopeStatus.PARKED:
-            pass
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_PARKED, text_color="red", background_color="white")
         elif response.status == TelescopeStatus.FLATTER:
-            pass
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_FLATTER, text_color="red", background_color="white")
         elif response.status == TelescopeStatus.SECURE:
-            pass
-        elif response.status == TelescopeStatus.NORTHEAST:
-            pass
-        elif response.status == TelescopeStatus.EAST:
-            pass
-        elif response.status == TelescopeStatus.SOUTHEAST:
-            pass
-        elif response.status == TelescopeStatus.SOUTHWEST:
-            pass
-        elif response.status == TelescopeStatus.WEST:
-            pass
-        elif response.status == TelescopeStatus.NORTHWEST:
-            pass
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_SECURED, text_color="red", background_color="white")
         elif response.status == TelescopeStatus.LOST:
-            pass
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_ANOMALY)
+            g_ui.status_alert(GuiLabel.ALERT_THE_SKY_LOST)
         elif response.status == TelescopeStatus.ERROR:
-            pass
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_ERROR)
+            g_ui.status_alert(GuiLabel.ALERT_THE_SKY_ERROR)
+        else:
+            cardinal = vars(GuiLabel).get(f"TELESCOPE_{TelescopeStatus.Name(response.status)}")
+            g_ui.update_status_tele(cardinal, text_color="#2c2825", background_color="green")
 
+        g_ui.update_tele_text({"alt": response.aa_coords.alt, "az": response.aa_coords.az})

@@ -1,3 +1,10 @@
+import logging
+import logging.config
+
+
+logging.config.fileConfig('logging.conf')
+
+
 from crac_protobuf.roof_pb2 import (
     RoofAction,
     RoofResponse,
@@ -20,8 +27,13 @@ from crac_client.retriever.roof_retriever import RoofRetriever
 from crac_client.retriever.button_retriever import ButtonRetriever
 from crac_client.retriever.telescope_retriever import TelescopeRetriever
 
+
+logger = logging.getLogger('crac_client.app')
+
+
 def callback(call_future):
     response = call_future.result()
+    logger.info(f"response to be converted is {response}")
     if isinstance(response, (RoofResponse)):
         converter = RoofConverter().convert
     elif isinstance(response, (ButtonResponse)):
@@ -35,6 +47,7 @@ g_ui = gui.Gui()
 while True:
     timeout = config.Config.getInt("sleep", "automazione")
     v, _ = g_ui.win.Read(timeout=timeout)
+    logger.info(f"Premuto pulsante: {v}")
 
     if v is None or v is GuiKey.EXIT or v is GuiKey.SHUTDOWN:
         break
@@ -90,3 +103,7 @@ while True:
         retriever = TelescopeRetriever()
         call_future = retriever.setAction(TelescopeAction.FLAT_POSITION)
         call_future.add_done_callback(callback)
+    else:
+        retriever = TelescopeRetriever()
+        response = retriever.setImmediateAction(TelescopeAction.CHECK_TELESCOPE)
+        converter = TelescopeConverter().convert(response, g_ui)

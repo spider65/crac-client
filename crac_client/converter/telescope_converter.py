@@ -27,7 +27,7 @@ class TelescopeConverter:
         elif response.speed == TelescopeSpeed.SLEWING:
             g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF.value, text_color="red", background_color="white")
             g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_ON.value, text_color="#2c2825", background_color="green")
-        
+
         if response.status == TelescopeStatus.PARKED:
             g_ui.update_status_tele(GuiLabel.TELESCOPE_PARKED.value, text_color="red", background_color="white")
         elif response.status == TelescopeStatus.FLATTER:

@@ -1,3 +1,4 @@
+from enum import auto
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
 from crac_protobuf.telescope_pb2 import (
@@ -12,7 +13,7 @@ class TelescopeRetriever(Retriever):
         super().__init__(g_ui)
         self.client = TelescopeStub(self.channel)
 
-    def setAction(self, telescopeAction: TelescopeAction):
-        request = TelescopeRequest(action=telescopeAction)
+    def setAction(self, telescopeAction: TelescopeAction, autolight: bool):
+        request = TelescopeRequest(action=telescopeAction, autolight=autolight)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)

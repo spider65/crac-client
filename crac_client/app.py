@@ -19,10 +19,6 @@ from crac_protobuf.curtains_pb2 import (
     CurtainsAction
 )
 from crac_client import config, gui
-from crac_client.converter.button_converter import ButtonConverter
-from crac_client.converter.curtains_converter import CurtainsConverter
-from crac_client.converter.roof_converter import RoofConverter
-from crac_client.converter.telescope_converter import TelescopeConverter
 from crac_client.gui_constants import GuiKey
 from crac_client.retriever.button_retriever import ButtonRetriever
 from crac_client.retriever.curtains_retriever import CurtainsRetriever
@@ -73,13 +69,13 @@ while True:
         retriever.setAction(ButtonAction.TURN_OFF, ButtonType.FLAT_LIGHT)
     elif v is GuiKey.SYNC_TELE:
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.SYNC)
+        retriever.setAction(TelescopeAction.SYNC, g_ui.is_autolight())
     elif v is GuiKey.PARK_TELE:
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.PARK_POSITION)
+        retriever.setAction(TelescopeAction.PARK_POSITION, g_ui.is_autolight())
     elif v is GuiKey.FLAT_TELE:
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.FLAT_POSITION)
+        retriever.setAction(TelescopeAction.FLAT_POSITION, g_ui.is_autolight())
     elif v is GuiKey.ENABLED_CURTAINS:
         retriever = CurtainsRetriever(g_ui)
         retriever.setAction(CurtainsAction.ENABLE)
@@ -87,15 +83,14 @@ while True:
         retriever = CurtainsRetriever(g_ui)
         retriever.setAction(CurtainsAction.DISABLE)
     else:
-        retriever = ButtonRetriever(g_ui)
-        retriever.getStatus()
-
         retriever = RoofRetriever(g_ui)
         retriever.setAction(RoofAction.CHECK_ROOF)
 
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.CHECK_TELESCOPE)
+        retriever.setAction(TelescopeAction.CHECK_TELESCOPE, g_ui.is_autolight())
 
         retriever = CurtainsRetriever(g_ui)
         retriever.setAction(CurtainsAction.CHECK_CURTAIN)
 
+        retriever = ButtonRetriever(g_ui)
+        retriever.getStatus()

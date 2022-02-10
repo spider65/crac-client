@@ -1,4 +1,5 @@
 import logging
+from crac_client.config import Config
 from crac_client.converter.button_converter import ButtonConverter
 from crac_client.converter.curtains_converter import CurtainsConverter
 from crac_client.converter.roof_converter import RoofConverter
@@ -25,7 +26,8 @@ logger = logging.getLogger('crac_client.app')
 
 class Retriever:
     def __init__(self, g_ui: Gui) -> None:
-        self.channel = grpc.insecure_channel("localhost:50051")
+        
+        self.channel = grpc.insecure_channel(f'{Config.getValue("ip", "server")}:{Config.getValue("port", "server")}')
         self.g_ui = g_ui
 
     def callback(self, call_future):

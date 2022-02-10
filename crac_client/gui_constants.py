@@ -1,4 +1,5 @@
-class GuiLabel:
+from enum import Enum
+class GuiLabel(Enum):
 
     NO_ALERT = "Nessun errore riscontrato"
     ALERT_THE_SKY_LOST = "Connessione con the Sky persa"
@@ -10,11 +11,14 @@ class GuiLabel:
     ALERT_TELESCOPE_OPERATIVE = "Attenzione telescopio operativo: {status}"
     ALERT_CURTAINS_ENABLED = "Attenzione tende aperte"
     ALERT_ROOF_CLOSED = "Attenzione tetto chiuso"
-    CURTAINS_DISABLED = "Disattivata"
-    CURTAINS_CLOSED = "Chiusa"
-    CURTAINS_STOPPED = "Ferma"
-    CURTAINS_OPEN = "Aperta"
-    CURTAINS_ANOMALY = "Anomalia"
+    CURTAIN_DISABLED = "Disattivata"
+    CURTAIN_CLOSED = "Chiusa"
+    CURTAIN_STOPPED = "Ferma"
+    CURTAIN_OPENED = "Aperta"
+    CURTAIN_ERROR = "Errore"
+    CURTAIN_DANGER = "Pericolo"
+    CURTAIN_OPENING = "Apertura"
+    CURTAIN_CLOSING = "Chiusura"
     TELESCOPE_PARKED = "Parked"
     TELESCOPE_FLATTER = "Flatter"
     TELESCOPE_SECURED = "In Sicurezza"

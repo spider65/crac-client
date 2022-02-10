@@ -29,3 +29,6 @@ class ButtonConverter:
             elif response.status == ButtonStatus.ON:
                 g_ui.update_disable_button_light_on()
             
+    def buttons_convert(self, response, g_ui):
+        for button in response.buttons:
+            self.convert(button, g_ui)

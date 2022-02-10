@@ -1,22 +1,18 @@
+from crac_client.gui import Gui
+from crac_client.retriever.retriever import Retriever
 from crac_protobuf.telescope_pb2 import (
     TelescopeAction,
     TelescopeRequest
 )
 from crac_protobuf.telescope_pb2_grpc import TelescopeStub
-import grpc
 
 
-channel = grpc.insecure_channel("localhost:50051")
-client = TelescopeStub(channel)
+class TelescopeRetriever(Retriever):
+    def __init__(self, g_ui: Gui) -> None:
+        super().__init__(g_ui)
+        self.client = TelescopeStub(self.channel)
 
-
-class TelescopeRetriever:
     def setAction(self, telescopeAction: TelescopeAction):
         request = TelescopeRequest(action=telescopeAction)
-        call_future = client.SetAction.future(request)
-        return call_future
-
-    def setImmediateAction(self, telescopeAction: TelescopeAction):
-        request = TelescopeRequest(action=telescopeAction)
-        response = client.SetAction(request)
-        return response
+        call_future = self.client.SetAction.future(request, wait_for_ready=True)
+        call_future.add_done_callback(self.callback)

@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 class Gui:
 
     def __init__(self):
+        self.east_steps = 0
+        self.west_steps = 0
         self.n_step_corsa = config.Config.getInt('n_step_corsa', "encoder_step")
         self.alt_max_tend_e = config.Config.getInt("max_est", "tende")
         self.alt_max_tend_w = config.Config.getInt("max_west", "tende")
@@ -62,20 +64,20 @@ class Gui:
                     ],
                     [
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON, key=GuiKey.POWER_ON_TELE, disabled=False, size=(4, 1), tooltip="accensione alimentarore telescopio"),
-                            sg.Button(GuiLabel.OFF, key=GuiKey.POWER_OFF_TELE, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento alimentatore telescopio"),
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.POWER_ON_TELE, disabled=False, size=(4, 1), tooltip="accensione alimentarore telescopio"),
+                            sg.Button(GuiLabel.OFF.value, key=GuiKey.POWER_OFF_TELE, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento alimentatore telescopio"),
                         ]]), title="Power Switch Tele", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON, key=GuiKey.POWER_ON_CCD, disabled=False, size=(4, 1), tooltip="accensione alimentatore CCD"),
-                            sg.Button(GuiLabel.OFF, key=GuiKey.POWER_OFF_CCD, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento alimentatore CCD"),
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.POWER_ON_CCD, disabled=False, size=(4, 1), tooltip="accensione alimentatore CCD"),
+                            sg.Button(GuiLabel.OFF.value, key=GuiKey.POWER_OFF_CCD, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento alimentatore CCD"),
                         ]]), title="Power Switch CCD", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON, key=GuiKey.PANEL_ON, disabled=False, size=(4, 1), tooltip="accensione pannnello del flat"),
-                            sg.Button(GuiLabel.OFF, key=GuiKey.PANEL_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento pannello flat")
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.PANEL_ON, disabled=False, size=(4, 1), tooltip="accensione pannnello del flat"),
+                            sg.Button(GuiLabel.OFF.value, key=GuiKey.PANEL_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento pannello flat")
                         ]]), title="Panel Flat", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON, key=GuiKey.LIGHT_ON, disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se i telescopio è in fase di ripresa"),
-                            sg.Button(GuiLabel.OFF, key=GuiKey.LIGHT_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento luci cupola"),
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.LIGHT_ON, disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se i telescopio è in fase di ripresa"),
+                            sg.Button(GuiLabel.OFF.value, key=GuiKey.LIGHT_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento luci cupola"),
                             sg.Checkbox('Enable Autolight', key="autolight", default=True)
                         ]]), title="Light Dome", pad=(3, 10))
                     ],
@@ -104,27 +106,27 @@ class Gui:
                             [
                                 sg.Column(layout=(
                                     [sg.Text('Tetto', size=(11, 1), justification='center', font=("Helvetica", 12))],
-                                    [sg.Text(GuiLabel.ROOF_CLOSED, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-roof', background_color="red", text_color="white")]
+                                    [sg.Text(GuiLabel.ROOF_CLOSED.value, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-roof', background_color="red", text_color="white")]
                                 )),
                                 sg.Column(layout=(
                                     [sg.Text('Telescopio', size=(25, 1), justification='center', font=("Helvetica", 12))],
                                     [
-                                        sg.Text(GuiLabel.TELESCOPE_PARKED, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SYNC_OFF, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-sync', background_color="white", text_color="red")
+                                        sg.Text(GuiLabel.TELESCOPE_PARKED.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_SYNC_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-sync', background_color="white", text_color="red")
                                     ]
                                 )),
                                 sg.Column(layout=(
                                     [sg.Text('Tenda Ovest', size=(11, 1), justification='center', font=("Helvetica", 12)), sg.Text('Tenda Est', size=(11, 1), justification='center', font=("Helvetica", 12))],
                                     [
-                                        sg.Text(GuiLabel.CURTAINS_DISABLED, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-curtain-west', background_color="red", text_color="white"),
-                                        sg.Text(GuiLabel.CURTAINS_DISABLED, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-curtain-east', background_color="red", text_color="white")
+                                        sg.Text(GuiLabel.CURTAIN_DISABLED.value, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-curtain_west', background_color="red", text_color="white"),
+                                        sg.Text(GuiLabel.CURTAIN_DISABLED.value, size=(11, 1), justification='center', font=("Helvetica", 12), key='status-curtain_east', background_color="red", text_color="white")
                                     ]
                                 ))
 
                             ],
-                            [sg.Text(GuiLabel.NO_ALERT, size=(58, 1), justification='center', background_color="#B0C4DE", font=("Helvetica", 12), text_color="#FF0000", key="alert", relief=sg.RELIEF_RIDGE)]
+                            [sg.Text(GuiLabel.NO_ALERT.value, size=(58, 1), justification='center', background_color="#B0C4DE", font=("Helvetica", 12), text_color="#FF0000", key="alert", relief=sg.RELIEF_RIDGE)]
                         ]), title='Status CRaC', relief=sg.RELIEF_GROOVE
                     )]
                  ]
@@ -248,29 +250,34 @@ class Gui:
         self.win.find_element('alt').Update(altitude)
         self.win.find_element('az').Update(azimuth)
 
-    def update_status_curtain_east(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
+    def update_status_curtain(self, orientation, status, text_color: str = 'white', background_color: str = 'red') -> None:
 
         """ Update Curtain East Status """
 
         logger.info('update_status_curtain_east in gui')
-        self.win.find_element('status-curtain-east').Update(status, text_color=text_color, background_color=background_color)
+        self.win.find_element(f"status-{orientation}").Update(status, text_color=text_color, background_color=background_color)
 
-    def update_status_curtain_west(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
-
-        """ Update Curtain West Status """
-
-        logger.info('update_status_curtain_west in gui %s', status)
-        self.win.find_element('status-curtain-west').Update(status, text_color=text_color, background_color=background_color)
-
-    def update_curtains_text(self, e_e: int, e_w: int) -> Tuple[int, int]:
+    def update_curtains_text(self, alpha_e: int, alpha_w: int) -> Tuple[int, int]:
 
         """ Update curtains angular values """
 
-        alpha_e = int(e_e * float("{0:.3f}".format(self.increm_e)))  # from steps to degree for east
-        alpha_w = int(e_w * float("{0:.3f}".format(self.increm_w)))  # from steps to degree for west
-
         self.win.find_element('apert_e').Update(alpha_e)
         self.win.find_element('apert_w').Update(alpha_w)
+
+    def is_curtains_position_changed(self, east_steps: int, west_steps: int) -> bool:
+        if east_steps == self.east_steps and west_steps == self.west_steps:
+            return False
+        
+        self.east_steps = east_steps
+        self.west_steps = west_steps
+        return True
+
+    def convert_steps_to_angular_values(self, east_steps: int, west_steps: int) -> Tuple[int, int]:
+
+        """ Convert steps to curtains angular values """
+
+        alpha_e = int(east_steps * float("{0:.3f}".format(self.increm_e)))  # from steps to degree for east
+        alpha_w = int(west_steps * float("{0:.3f}".format(self.increm_w)))  # from steps to degree for west
         return alpha_e, alpha_w
 
     def update_disable_button_disabled_curtains(self):

@@ -56,9 +56,11 @@ while True:
         retriever = ButtonRetriever(g_ui)
         retriever.setAction(ButtonAction.TURN_OFF, ButtonType.CCD_SWITCH)
     elif v is GuiKey.LIGHT_ON:
+        g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
         retriever.setAction(ButtonAction.TURN_ON, ButtonType.DOME_LIGHT)
     elif v is GuiKey.LIGHT_OFF:
+        g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
         retriever.setAction(ButtonAction.TURN_OFF, ButtonType.DOME_LIGHT)
     elif v is GuiKey.PANEL_ON:

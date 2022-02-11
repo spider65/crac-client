@@ -167,6 +167,9 @@ class Gui:
         autolight = self.win.find_element('autolight').Get()
         logger.debug('autolight status is %s', autolight)
         return autolight
+    
+    def set_autolight(self, checked: bool):
+        self.win.find_element('autolight').Update(checked)
 
     def base_draw(self) -> None:
         p1 = ((int((self.l / 2) - (self.delta_pt / 2))) - (0.9 * self.t), self.h)

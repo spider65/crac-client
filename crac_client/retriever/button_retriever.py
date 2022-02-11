@@ -1,3 +1,4 @@
+from crac_client.converter.button_converter import ButtonConverter
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
 from crac_protobuf.button_pb2 import (
@@ -5,6 +6,8 @@ from crac_protobuf.button_pb2 import (
     ButtonType,
     ButtonRequest,
     ButtonsRequest,
+    ButtonResponse,
+    ButtonsResponse,
 )
 from crac_protobuf.button_pb2_grpc import (
     ButtonStub,
@@ -24,3 +27,9 @@ class ButtonRetriever(Retriever):
     def getStatus(self):
         call_future = self.client.GetStatus.future(ButtonsRequest(), wait_for_ready=True)
         call_future.add_done_callback(self.callback)
+    
+    def converter(self, response: object, g_ui: Gui):
+        if isinstance(response, (ButtonResponse)):
+            ButtonConverter().convert(response, g_ui)
+        elif isinstance(response, (ButtonsResponse)):
+            ButtonConverter().buttons_convert(response, g_ui)

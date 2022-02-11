@@ -1,3 +1,4 @@
+from crac_client.converter.curtains_converter import CurtainsConverter
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
 from crac_protobuf.curtains_pb2 import (
@@ -16,3 +17,6 @@ class CurtainsRetriever(Retriever):
         request = CurtainsRequest(action=action)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
+
+    def converter(self, response: object, g_ui: Gui):
+        CurtainsConverter().convert(response, g_ui)

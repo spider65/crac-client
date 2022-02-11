@@ -37,16 +37,8 @@ class Retriever:
         except BaseException as err:
             logger.error(f"the retrieval of the response threw an error {err=}, {type(err)=}")
         else:
-            if isinstance(response, (RoofResponse)):
-                converter = RoofConverter().convert
-            elif isinstance(response, (ButtonResponse)):
-                converter = ButtonConverter().convert
-            elif isinstance(response, (ButtonsResponse)):
-                converter = ButtonConverter().buttons_convert
-            elif isinstance(response, (TelescopeResponse)):
-                converter = TelescopeConverter().convert
-            elif isinstance(response, (CurtainsResponse)):
-                converter = CurtainsConverter().convert
-
-            converter(response, self.g_ui)
+            self.converter(response, self.g_ui)
             self.channel.close()
+    
+    def converter(self, response: object, g_ui: Gui):
+        raise NotImplementedError()

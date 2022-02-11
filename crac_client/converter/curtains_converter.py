@@ -1,12 +1,11 @@
-
 import logging
+from crac_client.gui import Gui
+from crac_client.gui_constants import GuiLabel
 from crac_protobuf.curtains_pb2 import (
     CurtainStatus,
     CurtainOrientation,
     CurtainsResponse
 )
-from crac_client.gui import Gui
-from crac_client.gui_constants import GuiLabel
 
 
 logger = logging.getLogger('crac_client.app')
@@ -19,7 +18,7 @@ class CurtainsConverter:
         west_steps = 0
         for curtain in response.curtains:
             orientation = CurtainOrientation.Name(curtain.orientation).lower()
-            if curtain.orientation == CurtainOrientation.CURTAIN_EAST:
+            if curtain.orientation is CurtainOrientation.CURTAIN_EAST:
                 east_steps = curtain.steps
             else:
                 west_steps = curtain.steps
@@ -30,7 +29,7 @@ class CurtainsConverter:
             elif curtain.status in [CurtainStatus.CURTAIN_CLOSED, CurtainStatus.CURTAIN_STOPPED, CurtainStatus.CURTAIN_OPENED]:
                 g_ui.status_alert(GuiLabel.NO_ALERT.value)
                 g_ui.update_disable_button_close_roof()
-            elif curtain.status == CurtainStatus.CURTAIN_DISABLED:
+            elif curtain.status is CurtainStatus.CURTAIN_DISABLED:
                 g_ui.status_alert(GuiLabel.NO_ALERT.value)
                 curtains_disabled += 1
 
@@ -45,4 +44,3 @@ class CurtainsConverter:
             alpha_e, alpha_w = g_ui.convert_steps_to_angular_values(east_steps, west_steps)
             g_ui.update_curtains_text(alpha_e, alpha_w)
             g_ui.update_curtains_graphic(alpha_e, alpha_w)
-

@@ -52,14 +52,14 @@ class Gui:
                             sg.Button('Chiudi', key=GuiKey.CLOSE_ROOF, disabled=True, size=(6, 1), tooltip="chiude il tetto")
                         ]]), title="Tetto", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button('Sync', key=GuiKey.SYNC_TELE, disabled=False, size=(5, 1), tooltip='sincronizza il telescopio'),
-                            sg.Button('Park', key=GuiKey.PARK_TELE, disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park'),
-                            sg.Button('Flat', key=GuiKey.FLAT_TELE, disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat')
+                            sg.Button('Sync', key=GuiKey.SYNC_TELE, disabled=False, size=(5, 1), tooltip='sincronizza il telescopio sulle coordinate di park'),
+                            sg.Button('Park', key=GuiKey.PARK_TELE, disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking'),
+                            sg.Button('Flat', key=GuiKey.FLAT_TELE, disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento')
                         ]]), title="Telescopio", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button('Attiva', key=GuiKey.ENABLED_CURTAINS, disabled=True, size=(6, 1), tooltip='clicca per attivare'),
-                            sg.Button('Disattiva', key=GuiKey.DISABLED_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per attivare'),
-                            sg.Button('Calibra', key=GuiKey.CALIBRATE_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per attivare')
+                            sg.Button('Attiva', key=GuiKey.ENABLED_CURTAINS, disabled=True, size=(6, 1), tooltip='clicca per attivare le tendine'),
+                            sg.Button('Disattiva', key=GuiKey.DISABLED_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per disattivare le tendine'),
+                            sg.Button('Calibra', key=GuiKey.CALIBRATE_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per calibrare le tendine')
                         ]]), title="Tende", pad=(3, 0))
                     ],
                     [
@@ -72,13 +72,13 @@ class Gui:
                             sg.Button(GuiLabel.OFF.value, key=GuiKey.POWER_OFF_CCD, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento alimentatore CCD"),
                         ]]), title="Power Switch CCD", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON.value, key=GuiKey.PANEL_ON, disabled=False, size=(4, 1), tooltip="accensione pannnello del flat"),
-                            sg.Button(GuiLabel.OFF.value, key=GuiKey.PANEL_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento pannello flat")
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.PANEL_ON, disabled=False, size=(4, 1), tooltip="accensione pannnello del flat e attiva il tracking se il telescopio è in posizione flat"),
+                            sg.Button(GuiLabel.OFF.value, key=GuiKey.PANEL_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento pannello flat e disattiva il tracking se il telescopio è in posizione flat")
                         ]]), title="Panel Flat", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(GuiLabel.ON.value, key=GuiKey.LIGHT_ON, disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se i telescopio è in fase di ripresa"),
+                            sg.Button(GuiLabel.ON.value, key=GuiKey.LIGHT_ON, disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se il telescopio è in fase di ripresa"),
                             sg.Button(GuiLabel.OFF.value, key=GuiKey.LIGHT_OFF, disabled=True, size=(4, 1), button_color=('black', 'red'), tooltip="spegnimento luci cupola"),
-                            sg.Checkbox('Enable Autolight', key="autolight", default=True)
+                            sg.Checkbox('Enable Autolight', key="autolight", default=True, tooltip="le luci della cupola si accendono automaticamente quando il telescopio è in slewing")
                         ]]), title="Light Dome", pad=(3, 10))
                     ],
                     [

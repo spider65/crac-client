@@ -2,8 +2,8 @@ from enum import Enum
 class GuiLabel(Enum):
 
     NO_ALERT = "Nessun errore riscontrato"
-    ALERT_THE_SKY_LOST = "Connessione con the Sky persa"
-    ALERT_THE_SKY_ERROR = "Errore di TheSky"
+    ALERT_TELESCOPE_LOST = "Connessione con il telescopio persa"
+    ALERT_TELESCOPE_ERROR = "Errore del telescopio"
     ALERT_CHECK_CURTAINS_SWITCH = "Controllare switch tende - ricalibrazione"
     ALERT_CRAC_ANOMALY = "Anomalia CRaC: stato invalido dei componenti"
     ALERT_TELESCOPE_ROOF = "Attenzione, Telescopio vicino al tetto"

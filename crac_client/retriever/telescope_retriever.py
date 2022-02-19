@@ -4,7 +4,8 @@ from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
 from crac_protobuf.telescope_pb2 import (
     TelescopeAction,
-    TelescopeRequest
+    TelescopeRequest,
+    TelescopeStatus,
 )
 from crac_protobuf.telescope_pb2_grpc import TelescopeStub
 

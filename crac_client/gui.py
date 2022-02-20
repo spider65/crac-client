@@ -165,7 +165,6 @@ class Gui:
         """
 
         autolight = self.win.find_element('autolight').Get()
-        logger.debug('autolight status is %s', autolight)
         return autolight
     
     def set_autolight(self, checked: bool):
@@ -197,7 +196,6 @@ class Gui:
 
         """ Update Roof Status """
 
-        logger.info('update_status_roof in gui')
         self.win.find_element('status-roof').Update(status, text_color=text_color, background_color=background_color)
 
     def __toggle_button__(self, *args, **kwargs):
@@ -217,22 +215,25 @@ class Gui:
 
         """ Update enable-disable button """
 
-        logger.info('update_enable_disable_button in gui')
         self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=True)
-        self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=False)
+        self.__toggle_button__(GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=False)
 
     def update_disable_button_close_roof(self):
 
         """ Update disable button close roof """
 
-        logger.info('disable close roof button in gui')
         self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=True)
+    
+    def update_enable_button_close_roof(self):
+
+        """ Update disable button close roof """
+
+        self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=False)
 
     def update_enable_button_open_roof(self):
 
         """ Update enable button open roof """
 
-        logger.info('enable close roof button in gui and the other components')
         self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=False)
         self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=True)
 
@@ -240,7 +241,6 @@ class Gui:
 
         """ Update Tele Status """
 
-        logger.info('update_status_tele in gui')
         self.win.find_element('status-tele').Update(status, text_color=text_color, background_color=background_color)
 
     def update_tele_text(self, coords: Dict[str, str]) -> None:
@@ -257,7 +257,6 @@ class Gui:
 
         """ Update Curtain East Status """
 
-        logger.info('update_status_curtain_east in gui')
         self.win.find_element(f"status-{orientation}").Update(status, text_color=text_color, background_color=background_color)
 
     def update_curtains_text(self, alpha_e: int, alpha_w: int) -> Tuple[int, int]:
@@ -287,28 +286,24 @@ class Gui:
 
         """ Update enable button curtains """
 
-        logger.info('update_enable_disable_button_curtains in gui')
         self.__toggle_button__(GuiKey.DISABLED_CURTAINS, disabled=True)
 
     def update_disable_button_enabled_curtains(self):
 
         """ Update enable button curtains """
 
-        logger.info('update_enable_disable_button_curtains in gui')
         self.__toggle_button__(GuiKey.ENABLED_CURTAINS, disabled=True)
 
     def update_disable_panel_all(self):
 
         """ Update enable button on panel flat """
 
-        logger.info('update_disable_button_panel_flat_all')
         self.__toggle_button__(GuiKey.PANEL_ON, GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
 
     def update_disable_panel_on(self):
 
         """ Update enable button on panel flat """
 
-        logger.info('update_disable_button_panel_flat_on')
         self.__toggle_button__(GuiKey.PANEL_ON, disabled=True, button_color=('white', 'green'))
         self.__toggle_button__(GuiKey.PANEL_OFF, disabled=False, button_color=('black', 'white'))
 
@@ -316,7 +311,6 @@ class Gui:
 
         """ Update disable button off panel flat """
 
-        logger.info('update_disable_button_panel_flat_off')
         self.__toggle_button__(GuiKey.PANEL_ON, disabled=False, button_color=('black', 'white'))
         self.__toggle_button__(GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
 
@@ -324,7 +318,6 @@ class Gui:
 
         """ Update enable button on power switch """
 
-        logger.info('update_disable_button_power_switch_on')
         self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=True, button_color=('white', 'green'))
         self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=False, button_color=('black', 'white'))
 
@@ -332,7 +325,6 @@ class Gui:
 
         """ Update disable button off power switch """
 
-        logger.info('update_disable_button_power_switch_off')
         self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=False, button_color=('black', 'white'))
         self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=True, button_color=('black', 'red'))
 
@@ -340,7 +332,6 @@ class Gui:
 
         """ Update enable button on light dome """
 
-        logger.info('update_disable_button_light_dome_on')
         self.__toggle_button__(GuiKey.LIGHT_ON, disabled=True, button_color=('white', 'green'))
         self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=False, button_color=('black', 'white'))
 
@@ -348,7 +339,6 @@ class Gui:
 
         """ Update enable button off light dome """
 
-        logger.info('update_disable_button_light_dome_off')
         self.__toggle_button__(GuiKey.LIGHT_ON, disabled=False, button_color=('black', 'white'))
         self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=True, button_color=('black', 'red'))
 
@@ -356,7 +346,6 @@ class Gui:
 
         """ Update enable button on auxiliary """
 
-        logger.info('update_disable_button_auxiliary_on')
         self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=True, button_color=('white', 'green'))
         self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=False, button_color=('black', 'white'))
 
@@ -364,7 +353,6 @@ class Gui:
 
         """ Update enable button off auxiliary """
 
-        logger.info('update_disable_button_auxiliary_off')
         self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=False, button_color=('black', 'white'))
         self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=True, button_color=('black', 'red'))
 
@@ -372,29 +360,37 @@ class Gui:
 
         """ Update Tracking Status """
 
-        logger.info('update_status_tracking in gui')
         self.win.find_element('status-tracking').Update(status, text_color=text_color, background_color=background_color)
 
     def update_status_slewing(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
 
         """ Update Slewing Status """
 
-        logger.info('update_status_slewing in gui')
         self.win.find_element('status-slewing').Update(status, text_color=text_color, background_color=background_color)
 
     def update_status_sync(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
 
         """ Update Sync Status """
 
-        logger.info('update_status_sync in gui')
         self.win.find_element('status-sync').Update(status, text_color=text_color, background_color=background_color)
 
-    def update_button_sync(self, disabled):
+    def update_button_sync(self, is_disabled: bool):
 
         """ Disable Button Sync """
 
-        logger.info('update_disable_button_sync on gui')
-        self.__toggle_button__(GuiKey.SYNC_TELE, disabled=disabled)
+        self.__toggle_button__(GuiKey.SYNC_TELE, disabled=is_disabled)
+
+    def update_button_park(self, is_disabled: bool):
+
+        """ Disable Button Park """
+
+        self.__toggle_button__(GuiKey.PARK_TELE, disabled=is_disabled)
+
+    def update_button_flat(self, is_disabled: bool):
+
+        """ Disable Button Park """
+
+        self.__toggle_button__(GuiKey.FLAT_TELE, disabled=is_disabled)
 
     def update_curtains_graphic(self, alpha_e: int, alpha_w: int) -> None:
 

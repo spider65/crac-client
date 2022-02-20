@@ -5,7 +5,6 @@ from crac_client.retriever.retriever import Retriever
 from crac_protobuf.telescope_pb2 import (
     TelescopeAction,
     TelescopeRequest,
-    TelescopeStatus,
 )
 from crac_protobuf.telescope_pb2_grpc import TelescopeStub
 

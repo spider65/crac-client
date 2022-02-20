@@ -16,3 +16,15 @@ class RoofConverter:
             g_ui.show_background_image()
             g_ui.update_status_roof(GuiLabel.ROOF_OPEN.value, text_color="#2c2825", background_color="green")
             g_ui.update_enable_disable_button()
+        elif response.status is RoofStatus.ROOF_CLOSING:
+            g_ui.show_background_image()
+            g_ui.update_status_roof(GuiLabel.ROOF_CLOSING.value, text_color="#2c2825", background_color="green")
+            g_ui.toggle_curtains_buttons(is_disable=True)
+            g_ui.update_disable_button_close_roof()
+            g_ui.update_disable_button_open_roof()
+        elif response.status is RoofStatus.ROOF_OPENING:
+            g_ui.show_background_image()
+            g_ui.update_status_roof(GuiLabel.ROOF_OPENING.value, text_color="#2c2825", background_color="green")
+            g_ui.toggle_curtains_buttons(is_disable=True)
+            g_ui.update_disable_button_close_roof()
+            g_ui.update_disable_button_open_roof()

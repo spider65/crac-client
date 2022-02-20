@@ -223,7 +223,13 @@ class Gui:
         """ Update disable button close roof """
 
         self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=True)
-    
+
+    def update_disable_button_open_roof(self):
+        
+        """ Update disable button open roof """
+
+        self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=True)
+
     def update_enable_button_close_roof(self):
 
         """ Update disable button close roof """
@@ -235,6 +241,9 @@ class Gui:
         """ Update enable button open roof """
 
         self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=False)
+        self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=True)
+    
+    def toggle_curtains_buttons(self, is_disabled: bool):
         self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=True)
 
     def update_status_tele(self, status, text_color: str = 'white', background_color: str = 'red') -> None:

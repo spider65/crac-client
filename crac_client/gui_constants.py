@@ -38,6 +38,8 @@ class GuiLabel(Enum):
     TELESCOPE_SLEWING_OFF = "Slewing Off"
     ROOF_CLOSED = "Chiuso"
     ROOF_OPEN = "Aperto"
+    ROOF_OPENING = "Apertura"
+    ROOF_CLOSING = "Chiusura"
     ON = "On"
     OFF = "Off"
     STAND_BY = "Standby"

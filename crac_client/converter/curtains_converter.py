@@ -36,12 +36,11 @@ class CurtainsConverter:
                 logger.debug("disabled close roof button")
 
             g_ui.update_status_curtain(orientation, GuiLabel[CurtainStatus.Name(curtain.status)].value)
-        
+
         if curtains_disabled == 2:
             g_ui.update_disable_button_disabled_curtains()
             g_ui.update_enable_button_close_roof()
 
-        
         logger.debug(f"East steps: {east_steps}")
         logger.debug(f"West steps: {west_steps}")
         if g_ui.is_curtains_position_changed(east_steps, west_steps):

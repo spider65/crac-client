@@ -19,6 +19,7 @@ class GuiLabel(Enum):
     CURTAIN_DANGER = "Pericolo"
     CURTAIN_OPENING = "Apertura"
     CURTAIN_CLOSING = "Chiusura"
+    CURTAIN_DISABLING = "Disattivazione"
     TELESCOPE_PARKED = "Parked"
     TELESCOPE_FLATTER = "Flatter"
     TELESCOPE_SECURED = "In Sicurezza"

@@ -1,6 +1,6 @@
 [[package]]
 name = "crac-protobuf"
-version = "0.1.10"
+version = "0.1.12"
 description = "Protobuf contrat for client/server communication"
 category = "main"
 optional = false
@@ -8,7 +8,7 @@ python-versions = "^3.10"
 
 [package.source]
 type = "file"
-url = "../crac-protobuf/dist/crac-protobuf-0.1.10.tar.gz"
+url = "../crac-protobuf/dist/crac-protobuf-0.1.12.tar.gz"
 
 [[package]]
 name = "grpcio"
@@ -63,11 +63,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "5783266599e1a3aa452925ddf4aae611ade19b02a4d8d3eccc479bdbfd86b8d7"
+content-hash = "b245dfb3f81a7505abd5413552941b9c21fe8d61eaf2b00ad0ed415257f800bc"
 
 [metadata.files]
 crac-protobuf = [
-    {file = "crac-protobuf-0.1.10.tar.gz", hash = "sha256:226ee0182b75e2be02f7358ec2429a95f919ec67f3e55e98fbd3c952fb040207"},
+    {file = "crac-protobuf-0.1.12.tar.gz", hash = "sha256:b8e120866984832c889d41d48c3bd801d90d5fb30ec51d515680cd298750519a"},
 ]
 grpcio = [
     {file = "grpcio-1.44.0-cp310-cp310-linux_armv7l.whl", hash = "sha256:11f811c0fffd84fca747fbc742464575e5eb130fd4fb4d6012ccc34febd001db"},

@@ -43,32 +43,11 @@ while True:
     elif v is GuiKey.OPEN_ROOF:
         retriever = RoofRetriever(g_ui)
         retriever.setAction(RoofAction.OPEN)
-    elif v is GuiKey.POWER_ON_TELE:
+    elif v in ["TELE_SWITCH", "CCD_SWITCH", "FLAT_LIGHT", "DOME_LIGHT"]:
+        if v == "DOME_LIGHT":
+            g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_ON, ButtonType.TELE_SWITCH)
-    elif v is GuiKey.POWER_OFF_TELE:
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_OFF, ButtonType.TELE_SWITCH)
-    elif v is GuiKey.POWER_ON_CCD:
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_ON, ButtonType.CCD_SWITCH)
-    elif v is GuiKey.POWER_OFF_CCD:
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_OFF, ButtonType.CCD_SWITCH)
-    elif v is GuiKey.LIGHT_ON:
-        g_ui.set_autolight(False)
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_ON, ButtonType.DOME_LIGHT)
-    elif v is GuiKey.LIGHT_OFF:
-        g_ui.set_autolight(False)
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_OFF, ButtonType.DOME_LIGHT)
-    elif v is GuiKey.PANEL_ON:
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_ON, ButtonType.FLAT_LIGHT)
-    elif v is GuiKey.PANEL_OFF:
-        retriever = ButtonRetriever(g_ui)
-        retriever.setAction(ButtonAction.TURN_OFF, ButtonType.FLAT_LIGHT)
+        retriever.setAction(buttonAction=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
     elif v is GuiKey.SYNC_TELE:
         retriever = TelescopeRetriever(g_ui)
         retriever.setAction(TelescopeAction.SYNC, g_ui.is_autolight())

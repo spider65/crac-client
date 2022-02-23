@@ -19,8 +19,8 @@ class ButtonRetriever(Retriever):
         super().__init__(g_ui)
         self.client = ButtonStub(self.channel)
 
-    def setAction(self, roofAction: ButtonAction, roofType: ButtonType):
-        request = ButtonRequest(action=roofAction, type=roofType)
+    def setAction(self, buttonAction: ButtonAction, buttonType: ButtonType):
+        request = ButtonRequest(action=buttonAction, type=buttonType)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
 

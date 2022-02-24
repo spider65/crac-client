@@ -37,26 +37,27 @@ while True:
 
     if v is None or v is GuiKey.EXIT or v is GuiKey.SHUTDOWN:
         break
-    elif v is GuiKey.CLOSE_ROOF:
+    elif v == "ROOF":
         retriever = RoofRetriever(g_ui)
-        retriever.setAction(RoofAction.CLOSE)
-    elif v is GuiKey.OPEN_ROOF:
-        retriever = RoofRetriever(g_ui)
-        retriever.setAction(RoofAction.OPEN)
-    elif v in ["TELE_SWITCH", "CCD_SWITCH", "FLAT_LIGHT", "DOME_LIGHT"]:
-        if v == "DOME_LIGHT":
+        retriever.setAction(roofAction=int(RoofAction.Value(g_ui.win[v].metadata)))
+    elif v in [
+        ButtonType.Name(ButtonType.TELE_SWITCH), 
+        ButtonType.Name(ButtonType.CCD_SWITCH), 
+        ButtonType.Name(ButtonType.FLAT_LIGHT),
+        ButtonType.Name(ButtonType.DOME_LIGHT),
+    ]:
+        if v == ButtonType.Name(ButtonType.DOME_LIGHT):
+            logger.debug("is inside check for dome light")
             g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
         retriever.setAction(buttonAction=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
-    elif v is GuiKey.SYNC_TELE:
+    elif v in [
+        TelescopeAction.Name(TelescopeAction.SYNC),
+        TelescopeAction.Name(TelescopeAction.PARK_POSITION),
+        TelescopeAction.Name(TelescopeAction.FLAT_POSITION),
+    ]:
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.SYNC, g_ui.is_autolight())
-    elif v is GuiKey.PARK_TELE:
-        retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.PARK_POSITION, g_ui.is_autolight())
-    elif v is GuiKey.FLAT_TELE:
-        retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.FLAT_POSITION, g_ui.is_autolight())
+        retriever.setAction(telescopeAction=int(TelescopeAction.Value(g_ui.win[v].Key)), autolight=g_ui.is_autolight())
     elif v is GuiKey.ENABLED_CURTAINS:
         retriever = CurtainsRetriever(g_ui)
         retriever.setAction(CurtainsAction.ENABLE)

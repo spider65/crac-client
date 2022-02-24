@@ -25,21 +25,21 @@ class CurtainsConverter:
 
             if curtain.status in [CurtainStatus.CURTAIN_ERROR, CurtainStatus.CURTAIN_DANGER]:
                 g_ui.status_alert(GuiLabel.ALERT_CHECK_CURTAINS_SWITCH.value)
-                g_ui.update_disable_button_close_roof()
+                # g_ui.update_disable_button_close_roof()
                 logger.debug("disabled close roof button")
             elif curtain.status is CurtainStatus.CURTAIN_DISABLED:
                 g_ui.status_alert(GuiLabel.NO_ALERT.value)
                 curtains_disabled += 1
             else:
                 g_ui.status_alert(GuiLabel.NO_ALERT.value)
-                g_ui.update_disable_button_close_roof()
+                # g_ui.update_disable_button_close_roof()
                 logger.debug("disabled close roof button")
 
             g_ui.update_status_curtain(orientation, GuiLabel[CurtainStatus.Name(curtain.status)].value)
 
-        if curtains_disabled == 2:
-            g_ui.update_disable_button_disabled_curtains()
-            g_ui.update_enable_button_close_roof()
+        # if curtains_disabled == 2:
+            # g_ui.update_disable_button_disabled_curtains()
+            # g_ui.update_enable_button_close_roof()
 
         logger.debug(f"East steps: {east_steps}")
         logger.debug(f"West steps: {west_steps}")

@@ -2,7 +2,6 @@
 from crac_client.gui import Gui
 from crac_protobuf.button_pb2 import (
     ButtonAction,
-    ButtonStatus,
     ButtonType,
     ButtonsResponse,
     ButtonResponse,

@@ -1,3 +1,5 @@
+from array import array
+import enum
 import logging
 import logging.config
 
@@ -27,6 +29,10 @@ from crac_client.retriever.telescope_retriever import TelescopeRetriever
 
 
 logger = logging.getLogger('crac_client.app')
+def list_buttons_names(enum_type_wrapper: enumerate) -> list[str]:
+    return [
+        enum_type_wrapper.Name(curtainsAction) for curtainsAction in enum_type_wrapper.values()
+    ]
 
 
 g_ui = gui.Gui()
@@ -40,24 +46,18 @@ while True:
     elif v == "ROOF":
         retriever = RoofRetriever(g_ui)
         retriever.setAction(roofAction=int(RoofAction.Value(g_ui.win[v].metadata)))
-    elif v in [
-        ButtonType.Name(ButtonType.TELE_SWITCH), 
-        ButtonType.Name(ButtonType.CCD_SWITCH), 
-        ButtonType.Name(ButtonType.FLAT_LIGHT),
-        ButtonType.Name(ButtonType.DOME_LIGHT),
-    ]:
+    elif v in list_buttons_names(ButtonType):
         if v == ButtonType.Name(ButtonType.DOME_LIGHT):
             logger.debug("is inside check for dome light")
             g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
         retriever.setAction(buttonAction=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
-    elif v in [
-        TelescopeAction.Name(TelescopeAction.SYNC),
-        TelescopeAction.Name(TelescopeAction.PARK_POSITION),
-        TelescopeAction.Name(TelescopeAction.FLAT_POSITION),
-    ]:
+    elif v in list_buttons_names(TelescopeAction):
         retriever = TelescopeRetriever(g_ui)
         retriever.setAction(telescopeAction=int(TelescopeAction.Value(g_ui.win[v].Key)), autolight=g_ui.is_autolight())
+    # elif v in list_buttons_names(CurtainsAction):
+    #     retriever = CurtainsRetriever(g_ui)
+    #     retriever.setAction(curtainsAction=int(CurtainsAction.Value(g_ui.win[v].metadata)))
     elif v is GuiKey.ENABLED_CURTAINS:
         retriever = CurtainsRetriever(g_ui)
         retriever.setAction(CurtainsAction.ENABLE)
@@ -76,3 +76,4 @@ while True:
 
         retriever = ButtonRetriever(g_ui)
         retriever.getStatus()
+

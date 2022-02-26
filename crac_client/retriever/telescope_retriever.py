@@ -14,8 +14,8 @@ class TelescopeRetriever(Retriever):
         super().__init__(g_ui)
         self.client = TelescopeStub(self.channel)
 
-    def setAction(self, telescopeAction: TelescopeAction, autolight: bool):
-        request = TelescopeRequest(action=telescopeAction, autolight=autolight)
+    def setAction(self, action: TelescopeAction, autolight: bool):
+        request = TelescopeRequest(action=action, autolight=autolight)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
 

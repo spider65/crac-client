@@ -6,7 +6,9 @@ from crac_protobuf.telescope_pb2 import (
     TelescopeSpeed,
     TelescopeResponse,
 )
-
+from crac_protobuf.button_pb2 import (
+    ButtonLabel,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -49,12 +51,14 @@ class TelescopeConverter:
 
         for button_gui in response.buttons_gui:
             g_ui.win[button_gui.key](
+                ButtonLabel.Name(button_gui.label),
                 disabled=button_gui.is_disabled,
                 button_color=(
                     button_gui.button_color.text_color, 
                     button_gui.button_color.background_color
                 )
             )
+            g_ui.win[button_gui.key].metadata = button_gui.metadata
 
         logger.debug(f"Altaz coords: {response.aa_coords}")
         g_ui.update_tele_text({"alt": response.aa_coords.alt, "az": response.aa_coords.az})

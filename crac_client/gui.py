@@ -7,7 +7,11 @@ import config
 from tkinter import PhotoImage, NW
 from typing import Tuple
 from typing import Dict
-from gui_constants import GuiLabel, GuiKey
+from gui_constants import GuiLabel
+from crac_protobuf.button_pb2 import (
+    ButtonLabel,
+    ButtonKey,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -48,31 +52,30 @@ class Gui:
                     [sg.Text('Monitor Tende e Tetto ', size=(50, 1), justification='center', font=("Helvetica", 15))],
                     [
                         sg.Frame(layout=([[
-                            sg.Button(button_text='Chiuso', key="ROOF", metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto"),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OPEN), key=ButtonKey.KEY_ROOF, metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto"),
                         ]]), title="Tetto", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button('Sync', key="SYNC", disabled=False, size=(5, 1), tooltip='sincronizza il telescopio sulle coordinate di park'),
-                            sg.Button('Park', key="PARK_POSITION", disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking'),
-                            sg.Button('Flat', key="FLAT_POSITION", disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento')
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, disabled=False, size=(5, 1), tooltip='sincronizza il telescopio sulle coordinate di park'),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking'),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento')
                         ]]), title="Telescopio", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button('Attiva', key=GuiKey.ENABLED_CURTAINS, disabled=True, size=(6, 1), tooltip='clicca per attivare le tendine'),
-                            sg.Button('Disattiva', key=GuiKey.DISABLED_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per disattivare le tendine'),
-                            sg.Button('Calibra', key=GuiKey.CALIBRATE_CURTAINS, disabled=True,  size=(6, 1), tooltip='clicca per calibrare le tendine')
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_ENABLE), key=ButtonKey.KEY_CURTAINS, disabled=True, size=(6, 1), tooltip='clicca per attivare le tendine'),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_CALIBRATE), key=ButtonKey.KEY_CALIBRATE, disabled=True,  size=(6, 1), tooltip='clicca per calibrare le tendine')
                         ]]), title="Tende", pad=(3, 0))
                     ],
                     [
                         sg.Frame(layout=([[
-                            sg.Button(button_text="OFF", key="TELE_SWITCH", metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione alimentarore telescopio", button_color=("white", "red")),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_TELE_SWITCH, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione alimentarore telescopio", button_color=("white", "red")),
                         ]]), title="Power Switch Tele", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(button_text="OFF", key="CCD_SWITCH", metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione alimentatore CCD", button_color=("white", "red")),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_CCD_SWITCH, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione alimentatore CCD", button_color=("white", "red")),
                         ]]), title="Power Switch CCD", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(button_text="OFF", key="FLAT_LIGHT", metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione pannnello del flat e attiva il tracking se il telescopio è in posizione flat"),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_FLAT_LIGHT, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione pannnello del flat e attiva il tracking se il telescopio è in posizione flat"),
                         ]]), title="Panel Flat", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(button_text="OFF", key="DOME_LIGHT", metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se il telescopio è in fase di ripresa", button_color=("white", "red")),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_DOME_LIGHT, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se il telescopio è in fase di ripresa", button_color=("white", "red")),
                             sg.Checkbox('Enable Autolight', key="autolight", default=True, tooltip="le luci della cupola si accendono automaticamente quando il telescopio è in slewing")
                         ]]), title="Light Dome", pad=(3, 10))
                     ],

@@ -67,7 +67,7 @@ content-hash = "0029dc8f109efde28fc1c02d0848c2f530de01fd2936bbe75c04fc2835a4c09a
 
 [metadata.files]
 crac-protobuf = [
-    {file = "crac-protobuf-0.1.13.tar.gz", hash = "sha256:0ef4bd80c6d72f85801632d6850507f019124a7a7731be93e4fe7541e1e5f8ab"},
+    {file = "crac-protobuf-0.1.13.tar.gz", hash = "sha256:70290a0fce7bea17d7b6d766a8dd95e5616012a67b9144efb794569eef4edd0b"},
 ]
 grpcio = [
     {file = "grpcio-1.44.0-cp310-cp310-linux_armv7l.whl", hash = "sha256:11f811c0fffd84fca747fbc742464575e5eb130fd4fb4d6012ccc34febd001db"},

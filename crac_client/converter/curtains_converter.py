@@ -4,9 +4,12 @@ from crac_client.gui_constants import GuiLabel
 from crac_protobuf.curtains_pb2 import (
     CurtainStatus,
     CurtainOrientation,
-    CurtainsResponse
+    CurtainsResponse,
+    CurtainsAction,
 )
-
+from crac_protobuf.button_pb2 import (
+    ButtonLabel,
+)
 
 logger = logging.getLogger('crac_client.app')
 
@@ -37,9 +40,16 @@ class CurtainsConverter:
 
             g_ui.update_status_curtain(orientation, GuiLabel[CurtainStatus.Name(curtain.status)].value)
 
-        # if curtains_disabled == 2:
-            # g_ui.update_disable_button_disabled_curtains()
-            # g_ui.update_enable_button_close_roof()
+        for button_gui in response.buttons_gui:
+            g_ui.win[button_gui.key](
+                ButtonLabel.Name(button_gui.label),
+                disabled=button_gui.is_disabled,
+                button_color=(
+                    button_gui.button_color.text_color, 
+                    button_gui.button_color.background_color
+                )
+            )
+            g_ui.win[button_gui.key].metadata = CurtainsAction.Name(button_gui.metadata)
 
         logger.debug(f"East steps: {east_steps}")
         logger.debug(f"West steps: {west_steps}")

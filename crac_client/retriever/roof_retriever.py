@@ -15,8 +15,8 @@ class RoofRetriever(Retriever):
         super().__init__(g_ui)
         self.client = RoofStub(self.channel)
 
-    def setAction(self, roofAction: RoofAction):
-        request = RoofRequest(action=roofAction)
+    def setAction(self, action: RoofAction):
+        request = RoofRequest(action=action)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
 

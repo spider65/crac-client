@@ -45,25 +45,19 @@ while True:
         break
     elif v == "ROOF":
         retriever = RoofRetriever(g_ui)
-        retriever.setAction(roofAction=int(RoofAction.Value(g_ui.win[v].metadata)))
+        retriever.setAction(action=int(RoofAction.Value(g_ui.win[v].metadata)))
     elif v in list_buttons_names(ButtonType):
         if v == ButtonType.Name(ButtonType.DOME_LIGHT):
             logger.debug("is inside check for dome light")
             g_ui.set_autolight(False)
         retriever = ButtonRetriever(g_ui)
-        retriever.setAction(buttonAction=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
+        retriever.setAction(action=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
     elif v in list_buttons_names(TelescopeAction):
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(telescopeAction=int(TelescopeAction.Value(g_ui.win[v].Key)), autolight=g_ui.is_autolight())
-    # elif v in list_buttons_names(CurtainsAction):
-    #     retriever = CurtainsRetriever(g_ui)
-    #     retriever.setAction(curtainsAction=int(CurtainsAction.Value(g_ui.win[v].metadata)))
-    elif v is GuiKey.ENABLED_CURTAINS:
+        retriever.setAction(action=int(TelescopeAction.Value(g_ui.win[v].Key)), autolight=g_ui.is_autolight())
+    elif v in list_buttons_names(CurtainsAction):
         retriever = CurtainsRetriever(g_ui)
-        retriever.setAction(CurtainsAction.ENABLE)
-    elif v is GuiKey.DISABLED_CURTAINS:
-        retriever = CurtainsRetriever(g_ui)
-        retriever.setAction(CurtainsAction.DISABLE)
+        retriever.setAction(action=int(CurtainsAction.Value(g_ui.win[v].metadata)))
     else:
         retriever = RoofRetriever(g_ui)
         retriever.setAction(RoofAction.CHECK_ROOF)

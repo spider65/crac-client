@@ -1,5 +1,3 @@
-from array import array
-import enum
 import logging
 import logging.config
 
@@ -13,6 +11,7 @@ from crac_protobuf.roof_pb2 import (
 from crac_protobuf.button_pb2 import (
     ButtonAction,
     ButtonType,
+    ButtonKey,
 )
 from crac_protobuf.telescope_pb2 import (
     TelescopeAction,
@@ -40,33 +39,29 @@ while True:
     timeout = config.Config.getInt("sleep", "automazione")
     v, _ = g_ui.win.Read(timeout=timeout)
     logger.info(f"Premuto pulsante: {v}")
-
     if v is None or v is GuiKey.EXIT or v is GuiKey.SHUTDOWN:
         break
-    elif v == "ROOF":
+    elif v is ButtonKey.KEY_ROOF:
         retriever = RoofRetriever(g_ui)
-        retriever.setAction(action=int(RoofAction.Value(g_ui.win[v].metadata)))
-    elif v in list_buttons_names(ButtonType):
-        if v == ButtonType.Name(ButtonType.DOME_LIGHT):
-            logger.debug("is inside check for dome light")
-            g_ui.set_autolight(False)
+        retriever.setAction(action=g_ui.win[v].metadata)
+    elif v in ButtonRetriever.key_to_button_type_conversion.keys():
         retriever = ButtonRetriever(g_ui)
-        retriever.setAction(action=int(ButtonAction.Value(g_ui.win[v].metadata)), buttonType=ButtonType.Value(v))
-    elif v in list_buttons_names(TelescopeAction):
+        retriever.setAction(action=g_ui.win[v].metadata, key=v)
+    elif v in TelescopeRetriever.key_to_telescope_action_conversion:
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(action=int(TelescopeAction.Value(g_ui.win[v].Key)), autolight=g_ui.is_autolight())
-    elif v in list_buttons_names(CurtainsAction):
+        retriever.setAction(action=g_ui.win[v].metadata, autolight=g_ui.is_autolight())
+    elif v in CurtainsRetriever.key_to_curtains_action_conversion:
         retriever = CurtainsRetriever(g_ui)
-        retriever.setAction(action=int(CurtainsAction.Value(g_ui.win[v].metadata)))
+        retriever.setAction(action=g_ui.win[v].metadata)
     else:
         retriever = RoofRetriever(g_ui)
-        retriever.setAction(RoofAction.CHECK_ROOF)
+        retriever.setAction(RoofAction.Name(RoofAction.CHECK_ROOF))
 
         retriever = TelescopeRetriever(g_ui)
-        retriever.setAction(TelescopeAction.CHECK_TELESCOPE, g_ui.is_autolight())
+        retriever.setAction(TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), g_ui.is_autolight())
 
         retriever = CurtainsRetriever(g_ui)
-        retriever.setAction(CurtainsAction.CHECK_CURTAIN)
+        retriever.setAction(CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
 
         retriever = ButtonRetriever(g_ui)
         retriever.getStatus()

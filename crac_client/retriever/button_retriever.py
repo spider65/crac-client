@@ -8,6 +8,7 @@ from crac_protobuf.button_pb2 import (
     ButtonsRequest,
     ButtonResponse,
     ButtonsResponse,
+    ButtonKey,
 )
 from crac_protobuf.button_pb2_grpc import (
     ButtonStub,
@@ -19,8 +20,17 @@ class ButtonRetriever(Retriever):
         super().__init__(g_ui)
         self.client = ButtonStub(self.channel)
 
-    def setAction(self, action: ButtonAction, buttonType: ButtonType):
-        request = ButtonRequest(action=action, type=buttonType)
+    key_to_button_type_conversion = {
+        ButtonKey.KEY_TELE_SWITCH: ButtonType.TELE_SWITCH,
+        ButtonKey.KEY_CCD_SWITCH: ButtonType.CCD_SWITCH,
+        ButtonKey.KEY_FLAT_LIGHT: ButtonType.FLAT_LIGHT,
+        ButtonKey.KEY_DOME_LIGHT: ButtonType.DOME_LIGHT,
+    }
+
+    def setAction(self, action: str, key: ButtonKey):
+        if key is ButtonKey.KEY_DOME_LIGHT:
+            self.g_ui.set_autolight(False)
+        request = ButtonRequest(action=ButtonAction.Value(action), type=ButtonRetriever.key_to_button_type_conversion[key])
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
 
@@ -33,3 +43,4 @@ class ButtonRetriever(Retriever):
             ButtonConverter().convert(response, g_ui)
         elif isinstance(response, (ButtonsResponse)):
             ButtonConverter().buttons_convert(response, g_ui)
+

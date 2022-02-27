@@ -2,6 +2,9 @@ from enum import auto
 from crac_client.converter.telescope_converter import TelescopeConverter
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
+from crac_protobuf.button_pb2 import (
+    ButtonKey,
+)
 from crac_protobuf.telescope_pb2 import (
     TelescopeAction,
     TelescopeRequest,
@@ -14,8 +17,14 @@ class TelescopeRetriever(Retriever):
         super().__init__(g_ui)
         self.client = TelescopeStub(self.channel)
 
-    def setAction(self, action: TelescopeAction, autolight: bool):
-        request = TelescopeRequest(action=action, autolight=autolight)
+    key_to_telescope_action_conversion = [
+        ButtonKey.KEY_SYNC,
+        ButtonKey.KEY_PARK,
+        ButtonKey.KEY_FLAT,
+    ]
+
+    def setAction(self, action: str, autolight: bool):
+        request = TelescopeRequest(action=TelescopeAction.Value(action), autolight=autolight)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
         call_future.add_done_callback(self.callback)
 

@@ -5,6 +5,7 @@ from crac_protobuf.telescope_pb2 import (
     TelescopeStatus,
     TelescopeSpeed,
     TelescopeResponse,
+    TelescopeAction,
 )
 from crac_protobuf.button_pb2 import (
     ButtonLabel,
@@ -58,7 +59,7 @@ class TelescopeConverter:
                     button_gui.button_color.background_color
                 )
             )
-            g_ui.win[button_gui.key].metadata = button_gui.metadata
+            g_ui.win[button_gui.key].metadata = TelescopeAction.Name(button_gui.metadata)
 
         logger.debug(f"Altaz coords: {response.aa_coords}")
         g_ui.update_tele_text({"alt": response.aa_coords.alt, "az": response.aa_coords.az})

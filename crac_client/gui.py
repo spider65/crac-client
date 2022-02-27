@@ -52,16 +52,16 @@ class Gui:
                     [sg.Text('Monitor Tende e Tetto ', size=(50, 1), justification='center', font=("Helvetica", 15))],
                     [
                         sg.Frame(layout=([[
-                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OPEN), key=ButtonKey.KEY_ROOF, metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto"),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_CLOSE), key=ButtonKey.KEY_ROOF, metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto", button_color=("white", "red")),
                         ]]), title="Tetto", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, disabled=False, size=(5, 1), tooltip='sincronizza il telescopio sulle coordinate di park'),
-                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking'),
-                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento')
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, metadata="SYNC", disabled=False, size=(5, 1), tooltip='sincronizza il telescopio sulle coordinate di park', button_color=("white", "red")),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, metadata="PARK_POSITION", disabled=False, size=(5, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking', button_color=("white", "red")),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, metadata="FLAT_POSITION", disabled=False, size=(5, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento', button_color=("white", "red"))
                         ]]), title="Telescopio", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_ENABLE), key=ButtonKey.KEY_CURTAINS, disabled=True, size=(6, 1), tooltip='clicca per attivare le tendine'),
-                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_CALIBRATE), key=ButtonKey.KEY_CALIBRATE, disabled=True,  size=(6, 1), tooltip='clicca per calibrare le tendine')
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_DISABLE), key=ButtonKey.KEY_CURTAINS, metadata="ENABLE", disabled=True, size=(6, 1), tooltip='clicca per attivare le tendine', button_color=("white", "red")),
+                            sg.Button(ButtonLabel.Name(ButtonLabel.LABEL_CALIBRATE), key=ButtonKey.KEY_CALIBRATE, metadata="CALIBRATE_CURTAINS", disabled=True,  size=(6, 1), tooltip='clicca per calibrare le tendine', button_color=("white", "red"))
                         ]]), title="Tende", pad=(3, 0))
                     ],
                     [
@@ -72,7 +72,7 @@ class Gui:
                             sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_CCD_SWITCH, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione alimentatore CCD", button_color=("white", "red")),
                         ]]), title="Power Switch CCD", pad=(3, 10)),
                         sg.Frame(layout=([[
-                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_FLAT_LIGHT, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione pannnello del flat e attiva il tracking se il telescopio è in posizione flat"),
+                            sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_FLAT_LIGHT, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensione pannnello del flat e attiva il tracking se il telescopio è in posizione flat", button_color=("white", "red")),
                         ]]), title="Panel Flat", pad=(3, 10)),
                         sg.Frame(layout=([[
                             sg.Button(button_text=ButtonLabel.Name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_DOME_LIGHT, metadata="TURN_ON", disabled=False, size=(4, 1), tooltip="accensioni luci cupola, controllare se il telescopio è in fase di ripresa", button_color=("white", "red")),

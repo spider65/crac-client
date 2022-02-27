@@ -1,20 +1,18 @@
 
 from crac_client.gui import Gui
+from crac_client.loc import _name
 from crac_protobuf.button_pb2 import (
     ButtonAction,
-    ButtonType,
     ButtonsResponse,
     ButtonResponse,
     ButtonLabel,
 )
 
-from crac_client.gui_constants import GuiKey
-
 
 class ButtonConverter:
     def convert(self, response: ButtonResponse, g_ui: Gui):
         g_ui.win[response.button_gui.key](
-            ButtonLabel.Name(response.button_gui.label), 
+            _name(response.button_gui.label), 
             disabled=response.button_gui.is_disabled,
             button_color=(
                 response.button_gui.button_color.text_color, 

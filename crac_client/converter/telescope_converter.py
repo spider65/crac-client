@@ -1,6 +1,7 @@
 import logging
 from crac_client.gui import Gui
 from crac_client.gui_constants import GuiLabel
+from crac_client.loc import _name
 from crac_protobuf.telescope_pb2 import (
     TelescopeStatus,
     TelescopeSpeed,
@@ -52,7 +53,7 @@ class TelescopeConverter:
 
         for button_gui in response.buttons_gui:
             g_ui.win[button_gui.key](
-                ButtonLabel.Name(button_gui.label),
+                _name(button_gui.label),
                 disabled=button_gui.is_disabled,
                 button_color=(
                     button_gui.button_color.text_color, 

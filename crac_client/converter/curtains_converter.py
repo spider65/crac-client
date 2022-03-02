@@ -1,4 +1,5 @@
 import logging
+from crac_client.converter.converter import Converter
 from crac_client.gui import Gui
 from crac_client.gui_constants import GuiLabel
 from crac_client.loc import _name
@@ -8,15 +9,12 @@ from crac_protobuf.curtains_pb2 import (
     CurtainsResponse,
     CurtainsAction,
 )
-from crac_protobuf.button_pb2 import (
-    ButtonLabel,
-)
 
 
 logger = logging.getLogger(__name__)
 
 
-class CurtainsConverter:
+class CurtainsConverter(Converter):
     def convert(self, response: CurtainsResponse, g_ui: Gui):
         curtains_disabled = 0
         east_steps = 0
@@ -55,6 +53,7 @@ class CurtainsConverter:
 
         logger.debug(f"East steps: {east_steps}")
         logger.debug(f"West steps: {west_steps}")
+
         if g_ui.is_curtains_position_changed(east_steps, west_steps):
             alpha_e, alpha_w = g_ui.convert_steps_to_angular_values(east_steps, west_steps)
             g_ui.update_curtains_text(alpha_e, alpha_w)

@@ -1,4 +1,5 @@
 import logging
+from crac_client.converter.converter import Converter
 from crac_client.gui import Gui
 from crac_client.gui_constants import GuiLabel
 from crac_client.loc import _name
@@ -15,7 +16,7 @@ from crac_protobuf.button_pb2 import (
 logger = logging.getLogger(__name__)
 
 
-class TelescopeConverter:
+class TelescopeConverter(Converter):
     def convert(self, response: TelescopeResponse, g_ui: Gui):
         if response.sync:
             g_ui.update_status_sync(GuiLabel.TELESCOPE_SYNC_ON.value, text_color="#2c2825", background_color="green")

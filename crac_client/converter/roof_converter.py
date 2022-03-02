@@ -1,3 +1,4 @@
+from crac_client.converter.converter import Converter
 from crac_client.gui import Gui
 from crac_client.loc import _name
 from crac_protobuf.roof_pb2 import (
@@ -5,12 +6,9 @@ from crac_protobuf.roof_pb2 import (
     RoofResponse,
     RoofAction,
 )
-from crac_protobuf.button_pb2 import (
-    ButtonLabel,
-)
 
 
-class RoofConverter:
+class RoofConverter(Converter):
     def convert(self, response: RoofResponse, g_ui: Gui):
         if response.status is RoofStatus.ROOF_CLOSED:
             g_ui.hide_background_image()

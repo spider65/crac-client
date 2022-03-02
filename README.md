@@ -23,3 +23,11 @@ You can start the gui client with:
 cd crac_client
 python app.py
 ```
+
+# Compile localization
+
+```
+cd $WORKSPACE/crac-client/locales/it/LC_MESSAGES
+(path to msgfmt)
+/usr/local/Cellar/python@3.10/3.10.1/Frameworks/Python.framework/Versions/3.10/share/doc/python3.10/examples/Tools/i18n/msgfmt.py -o base.mo base
+```

@@ -125,29 +125,27 @@ class Gui:
                     [sg.Frame(layout=([
                             [
                                 sg.Column(layout=(
-                                    
                                     [
                                         sg.Image(filename="temp.png", subsample=1),
                                         sg.Image(filename="wind.png", subsample=1),
-                                        sg.Image(filename="humidity.png", subsample=1)
-                                       
+                                        sg.Image(filename="humidity.png", subsample=1)                                       
                                     ],
                                 ))
 
                             ]
-                            
+
                         ]), title='Dati Meteo', relief=sg.RELIEF_GROOVE
                     ),
                     sg.Frame(layout=([
                             [
-                                sg.Column(layout=(                                    
+                                sg.Column(layout=(
                                     [
                                        sg.Image(filename="volt.png", subsample=1)
                                     ],
                                 ))
 
                             ]
-                            
+
                         ]), title='Dati Alimentazione', relief=sg.RELIEF_GROOVE
                     )]
                  ]
@@ -187,7 +185,7 @@ class Gui:
 
         autolight = self.win.find_element('autolight').Get()
         return autolight
-    
+
     def set_autolight(self, checked: bool):
         logger.debug(f"Is inside set_autolight method with checked: {checked}")
         self.win['autolight'](checked)
@@ -241,7 +239,7 @@ class Gui:
     #     self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=True)
 
     # def update_disable_button_open_roof(self):
-        
+
     #     """ Update disable button open roof """
 
     #     self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=True)
@@ -258,7 +256,7 @@ class Gui:
 
     #     self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=False)
     #     self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=True)
-    
+
     # def toggle_curtains_buttons(self, is_disabled=True):
     #     self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=is_disabled)
 
@@ -294,7 +292,7 @@ class Gui:
     def is_curtains_position_changed(self, east_steps: int, west_steps: int) -> bool:
         if east_steps == self.east_steps and west_steps == self.west_steps:
             return False
-        
+
         self.east_steps = east_steps
         self.west_steps = west_steps
         return True

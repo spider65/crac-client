@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import logging
 from typing import Any
 from crac_client.gui import Gui
-from crac_client.jobs import JOBS, JOBS_LOCKER
+from crac_client.jobs import JOBS
 
 
 logger = logging.getLogger('crac_client.app')

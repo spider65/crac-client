@@ -121,6 +121,34 @@ class Gui:
                             ],
                             [sg.Text(GuiLabel.NO_ALERT.value, size=(58, 1), justification='center', background_color="#B0C4DE", font=("Helvetica", 12), text_color="#FF0000", key="alert", relief=sg.RELIEF_RIDGE)]
                         ]), title='Status CRaC', relief=sg.RELIEF_GROOVE
+                    )],
+                    [sg.Frame(layout=([
+                            [
+                                sg.Column(layout=(
+                                    
+                                    [
+                                        sg.Image(filename="temp.png", subsample=1),
+                                        sg.Image(filename="wind.png", subsample=1),
+                                        sg.Image(filename="humidity.png", subsample=1)
+                                       
+                                    ],
+                                ))
+
+                            ]
+                            
+                        ]), title='Dati Meteo', relief=sg.RELIEF_GROOVE
+                    ),
+                    sg.Frame(layout=([
+                            [
+                                sg.Column(layout=(                                    
+                                    [
+                                       sg.Image(filename="volt.png", subsample=1)
+                                    ],
+                                ))
+
+                            ]
+                            
+                        ]), title='Dati Alimentazione', relief=sg.RELIEF_GROOVE
                     )]
                  ]
 

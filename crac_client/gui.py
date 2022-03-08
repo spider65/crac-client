@@ -54,9 +54,10 @@ class Gui:
                             sg.Button(_name(ButtonLabel.LABEL_CLOSE), key=ButtonKey.KEY_ROOF, metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto", button_color=("white", "red")),
                         ]]), title="Tetto", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button(_name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, metadata="SYNC", disabled=False, size=(8, 1), tooltip='sincronizza il telescopio sulle coordinate di park', button_color=("white", "red")),
-                            sg.Button(_name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, metadata="PARK_POSITION", disabled=False, size=(8, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking', button_color=("white", "red")),
-                            sg.Button(_name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, metadata="FLAT_POSITION", disabled=False, size=(8, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento', button_color=("white", "red"))
+                            sg.Button(_name(ButtonLabel.LABEL_TELESCOPE_DISCONNECTED), key=ButtonKey.KEY_TELESCOPE_CONNECTION_TOGGLE, metadata="TELESCOPE_CONNECT", disabled=True, size=(10, 1), tooltip='connetti crac al telescopio', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, metadata="SYNC", disabled=True, size=(8, 1), tooltip='sincronizza il telescopio sulle coordinate di park', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, metadata="PARK_POSITION", disabled=True, size=(8, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, metadata="FLAT_POSITION", disabled=True, size=(8, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento', button_color=("white", "red"))
                         ]]), title="Telescopio", pad=(3, 0)),
                         sg.Frame(layout=([[
                             sg.Button(_name(ButtonLabel.LABEL_DISABLE), key=ButtonKey.KEY_CURTAINS, metadata="ENABLE", disabled=True, size=(8, 1), tooltip='clicca per attivare le tendine', button_color=("white", "red")),
@@ -107,7 +108,6 @@ class Gui:
                                         sg.Text(GuiLabel.TELESCOPE_PARKED.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
                                         sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
                                         sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SYNC_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-sync', background_color="white", text_color="red")
                                     ]
                                 )),
                                 sg.Column(layout=(
@@ -364,12 +364,6 @@ class Gui:
         """ Update Slewing Status """
 
         self.win.find_element('status-slewing').Update(status, text_color=text_color, background_color=background_color)
-
-    def update_status_sync(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
-
-        """ Update Sync Status """
-
-        self.win.find_element('status-sync').Update(status, text_color=text_color, background_color=background_color)
 
     def update_curtains_graphic(self, alpha_e: int, alpha_w: int) -> None:
 

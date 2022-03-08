@@ -18,11 +18,6 @@ logger = logging.getLogger(__name__)
 
 class TelescopeConverter(Converter):
     def convert(self, response: TelescopeResponse, g_ui: Gui):
-        if response.sync:
-            g_ui.update_status_sync(GuiLabel.TELESCOPE_SYNC_ON.value, text_color="#2c2825", background_color="green")
-        else:
-            g_ui.update_status_sync(GuiLabel.TELESCOPE_SYNC_OFF.value, text_color="red", background_color="white")
-
         if response.speed is TelescopeSpeed.SPEED_NOT_TRACKING:
             g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF.value, text_color="red", background_color="white")
             g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_OFF.value, text_color="red", background_color="white")

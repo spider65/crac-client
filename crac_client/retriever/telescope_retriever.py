@@ -24,6 +24,7 @@ class TelescopeRetriever(Retriever):
         ButtonKey.KEY_SYNC,
         ButtonKey.KEY_PARK,
         ButtonKey.KEY_FLAT,
+        ButtonKey.KEY_TELESCOPE_CONNECTION_TOGGLE,
     ]
 
     def setAction(self, action: str, autolight: bool):

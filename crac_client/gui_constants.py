@@ -37,6 +37,7 @@ class GuiLabel(Enum):
     TELESCOPE_TRACKING_OFF = "Track Off"
     TELESCOPE_SLEWING_ON = "Slewing On"
     TELESCOPE_SLEWING_OFF = "Slewing Off"
+    TELESCOPE_DISCONNECTED = "Disconnesso"
     ROOF_CLOSED = "Chiuso"
     ROOF_OPEN = "Aperto"
     ROOF_OPENING = "Apertura"

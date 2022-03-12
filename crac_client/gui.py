@@ -105,9 +105,9 @@ class Gui:
                                 sg.Column(layout=(
                                     [sg.Text('Telescopio', size=(25, 1), justification='center', font=("Helvetica", 12))],
                                     [
-                                        sg.Text(GuiLabel.TELESCOPE_PARKED.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_DISCONNECTED.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
                                     ]
                                 )),
                                 sg.Column(layout=(
@@ -199,41 +199,6 @@ class Gui:
             # update=False, tooltip="whatever"...
             self.win.find_element(key).Update(**kwargs)
 
-    # def update_enable_disable_button(self):
-
-    #     """ Update enable-disable button """
-
-    #     self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=True)
-    #     self.__toggle_button__(GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=False)
-
-    # def update_disable_button_close_roof(self):
-
-    #     """ Update disable button close roof """
-
-    #     self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=True)
-
-    # def update_disable_button_open_roof(self):
-        
-    #     """ Update disable button open roof """
-
-    #     self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=True)
-
-    # def update_enable_button_close_roof(self):
-
-    #     """ Update disable button close roof """
-
-    #     self.__toggle_button__(GuiKey.CLOSE_ROOF, disabled=False)
-
-    # def update_enable_button_open_roof(self):
-
-    #     """ Update enable button open roof """
-
-    #     self.__toggle_button__(GuiKey.OPEN_ROOF, disabled=False)
-    #     self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=True)
-    
-    # def toggle_curtains_buttons(self, is_disabled=True):
-    #     self.__toggle_button__(GuiKey.CLOSE_ROOF, GuiKey.ENABLED_CURTAINS, GuiKey.DISABLED_CURTAINS, GuiKey.CALIBRATE_CURTAINS, disabled=is_disabled)
-
     def update_status_tele(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
 
         """ Update Tele Status """
@@ -278,80 +243,6 @@ class Gui:
         alpha_e = int(east_steps * float("{0:.3f}".format(self.increm_e)))  # from steps to degree for east
         alpha_w = int(west_steps * float("{0:.3f}".format(self.increm_w)))  # from steps to degree for west
         return alpha_e, alpha_w
-
-    # def update_disable_button_disabled_curtains(self):
-
-    #     """ Update enable button curtains """
-
-    #     self.__toggle_button__(GuiKey.DISABLED_CURTAINS, disabled=True)
-
-    # def update_disable_button_enabled_curtains(self):
-
-    #     """ Update enable button curtains """
-
-    #     self.__toggle_button__(GuiKey.ENABLED_CURTAINS, disabled=True)
-
-    # def update_disable_panel_all(self):
-
-    #     """ Update enable button on panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_panel_on(self):
-
-    #     """ Update enable button on panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.PANEL_OFF, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_panel_off(self):
-
-    #     """ Update disable button off panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_power_switch_on(self):
-
-    #     """ Update enable button on power switch """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_power_switch_off(self):
-
-    #     """ Update disable button off power switch """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_light_on(self):
-
-    #     """ Update enable button on light dome """
-
-    #     self.__toggle_button__(GuiKey.LIGHT_ON, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_light_off(self):
-
-    #     """ Update enable button off light dome """
-
-    #     self.__toggle_button__(GuiKey.LIGHT_ON, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_power_on_ccd(self):
-
-    #     """ Update enable button on auxiliary """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_power_off_ccd(self):
-
-    #     """ Update enable button off auxiliary """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=True, button_color=('black', 'red'))
 
     def update_status_tracking(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
 

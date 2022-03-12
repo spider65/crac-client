@@ -37,6 +37,8 @@ class TelescopeConverter(Converter):
             g_ui.update_status_tele(GuiLabel.TELESCOPE_FLATTER.value, text_color="red", background_color="white")
         elif response.status is TelescopeStatus.SECURE:
             g_ui.update_status_tele(GuiLabel.TELESCOPE_SECURED.value, text_color="red", background_color="white")
+        elif response.status is TelescopeStatus.DISCONNECTED:
+            g_ui.update_status_tele(GuiLabel.TELESCOPE_DISCONNECTED.value, text_color="red", background_color="white")
         elif response.status is TelescopeStatus.LOST:
             g_ui.update_status_tele(GuiLabel.TELESCOPE_ANOMALY.value)
             g_ui.status_alert(GuiLabel.ALERT_TELESCOPE_LOST.value)

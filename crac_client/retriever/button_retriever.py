@@ -1,5 +1,4 @@
 from crac_client.config import Config
-from crac_client.converter.button_converter import ButtonConverter
 from crac_client.converter.converter import Converter
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever

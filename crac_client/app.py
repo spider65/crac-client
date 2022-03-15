@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from threading import Thread
 
 
 logging.config.fileConfig('logging.conf')
@@ -13,9 +14,11 @@ from crac_client.converter.telescope_converter import TelescopeConverter
 from crac_client.gui_constants import GuiKey
 from crac_client.jobs import JOBS
 from crac_client.retriever.button_retriever import ButtonRetriever
+from crac_client.retriever.camera_retriever import CameraRetriever
 from crac_client.retriever.curtains_retriever import CurtainsRetriever
 from crac_client.retriever.roof_retriever import RoofRetriever
 from crac_client.retriever.telescope_retriever import TelescopeRetriever
+from crac_client.streaming import STREAMING
 from crac_protobuf.button_pb2 import ButtonKey
 from crac_protobuf.curtains_pb2 import CurtainsAction
 from crac_protobuf.roof_pb2 import RoofAction
@@ -28,6 +31,8 @@ roof_retriever = RoofRetriever(RoofConverter())
 button_retriever = ButtonRetriever(ButtonConverter())
 telescope_retriever = TelescopeRetriever(TelescopeConverter())
 curtains_retriever = CurtainsRetriever(CurtainsConverter())
+camera_retriever = CameraRetriever()
+Thread(target=STREAMING.run).start()
 
 
 def deque():
@@ -56,4 +61,5 @@ while True:
             telescope_retriever.setAction(TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), g_ui.is_autolight())
             curtains_retriever.setAction(CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
             button_retriever.getStatus()
+            
     deque()

@@ -27,11 +27,4 @@ class CameraRetriever(Retriever):
         camera_action = CameraAction.Value(action)
         request = CameraRequest(action=camera_action)
         response = self.client.SetAction(request, wait_for_ready=True)
-        try:
-            self.converter.convert(response, g_ui)
-        except:
-            pass
-        if camera_action is CameraAction.CAMERA_CONNECT:
-            start_server(retriever=self)
-        elif camera_action is CameraAction.CAMERA_DISCONNECT:
-            stop_server()
+        self.converter.convert(response, g_ui, self, camera_action)

@@ -10,6 +10,10 @@ from crac_protobuf.roof_pb2 import (
 
 class RoofConverter(Converter):
     def convert(self, response: RoofResponse, g_ui: Gui):
+
+        if g_ui is None:
+            return
+
         if response.status is RoofStatus.ROOF_CLOSED:
             g_ui.hide_background_image()
         elif response.status is RoofStatus.ROOF_OPENED:

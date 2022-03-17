@@ -11,6 +11,10 @@ from crac_protobuf.button_pb2 import (
 
 class ButtonConverter(Converter):
     def convert(self, response: ButtonResponse, g_ui: Gui):
+    
+        if g_ui is None:
+            return
+
         if isinstance(response, (ButtonResponse)):
             self.button_convert(response, g_ui)
         elif isinstance(response, (ButtonsResponse)):

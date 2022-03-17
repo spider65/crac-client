@@ -16,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 class CurtainsConverter(Converter):
     def convert(self, response: CurtainsResponse, g_ui: Gui):
+
+        if g_ui is None:
+            return
+
         curtains_disabled = 0
         east_steps = 0
         west_steps = 0

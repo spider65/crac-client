@@ -67,6 +67,7 @@ while True:
             roof_retriever.setAction(RoofAction.Name(RoofAction.CHECK_ROOF))
             telescope_retriever.setAction(TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), g_ui.is_autolight())
             curtains_retriever.setAction(CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
+            camera_retriever.setAction(CameraAction.Name(CameraAction.CAMERA_CHECK), g_ui=g_ui)
             button_retriever.getStatus()
             
     deque()

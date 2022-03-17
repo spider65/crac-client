@@ -9,9 +9,7 @@ from crac_protobuf.telescope_pb2 import (
     TelescopeResponse,
     TelescopeAction,
 )
-from crac_protobuf.button_pb2 import (
-    ButtonLabel,
-)
+
 
 logger = logging.getLogger(__name__)
 

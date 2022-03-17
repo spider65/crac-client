@@ -47,8 +47,10 @@ while True:
     logger.debug(f"Premuto pulsante: {v}")
     match v:
         case v if v in [None, GuiKey.EXIT, GuiKey.SHUTDOWN]:
+            g_ui = None
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.TELESCOPE_DISCONNECT), autolight=False)
             camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), g_ui=g_ui)
+            deque()
             break
         case ButtonKey.KEY_ROOF:
             roof_retriever.setAction(action=g_ui.win[v].metadata)

@@ -1,6 +1,5 @@
 import logging
 import logging.config
-from threading import Thread
 
 
 logging.config.fileConfig('logging.conf')
@@ -8,6 +7,7 @@ logging.config.fileConfig('logging.conf')
 
 from crac_client import config, gui
 from crac_client.converter.button_converter import ButtonConverter
+from crac_client.converter.camera_converter import CameraConverter
 from crac_client.converter.curtains_converter import CurtainsConverter
 from crac_client.converter.roof_converter import RoofConverter
 from crac_client.converter.telescope_converter import TelescopeConverter
@@ -18,8 +18,8 @@ from crac_client.retriever.camera_retriever import CameraRetriever
 from crac_client.retriever.curtains_retriever import CurtainsRetriever
 from crac_client.retriever.roof_retriever import RoofRetriever
 from crac_client.retriever.telescope_retriever import TelescopeRetriever
-from crac_client.streaming import STREAMING
 from crac_protobuf.button_pb2 import ButtonKey
+from crac_protobuf.camera_pb2 import CameraAction
 from crac_protobuf.curtains_pb2 import CurtainsAction
 from crac_protobuf.roof_pb2 import RoofAction
 from crac_protobuf.telescope_pb2 import TelescopeAction
@@ -31,8 +31,7 @@ roof_retriever = RoofRetriever(RoofConverter())
 button_retriever = ButtonRetriever(ButtonConverter())
 telescope_retriever = TelescopeRetriever(TelescopeConverter())
 curtains_retriever = CurtainsRetriever(CurtainsConverter())
-camera_retriever = CameraRetriever()
-Thread(target=STREAMING.run).start()
+camera_retriever = CameraRetriever(CameraConverter())
 
 
 def deque():
@@ -41,6 +40,7 @@ def deque():
         job = JOBS.popleft()
         job['convert'](job['response'], g_ui)
 
+
 while True:
     timeout = config.Config.getInt("sleep", "automazione")
     v, _ = g_ui.win.Read(timeout=timeout)
@@ -48,6 +48,8 @@ while True:
     match v:
         case v if v in [None, GuiKey.EXIT, GuiKey.SHUTDOWN]:
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.TELESCOPE_DISCONNECT), autolight=False)
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), g_ui=g_ui)
+            break
         case ButtonKey.KEY_ROOF:
             roof_retriever.setAction(action=g_ui.win[v].metadata)
         case v if v in ButtonRetriever.key_to_button_type_conversion.keys():
@@ -56,6 +58,9 @@ while True:
             telescope_retriever.setAction(action=g_ui.win[v].metadata, autolight=g_ui.is_autolight())
         case v if v in CurtainsRetriever.key_to_curtains_action_conversion:
             curtains_retriever.setAction(action=g_ui.win[v].metadata)
+        case v if v in (ButtonKey.KEY_CAMERA_CONNECTION, ButtonKey.KEY_CAMERA_DISPLAY):
+            connection_button = g_ui.win[v]
+            camera_retriever.setAction(action=connection_button.metadata, g_ui=g_ui)
         case _:
             roof_retriever.setAction(RoofAction.Name(RoofAction.CHECK_ROOF))
             telescope_retriever.setAction(TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), g_ui.is_autolight())
@@ -63,3 +68,4 @@ while True:
             button_retriever.getStatus()
             
     deque()
+

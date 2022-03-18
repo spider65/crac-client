@@ -23,6 +23,12 @@ class CameraRetriever(Retriever):
 
     def setAction(self, action: str, g_ui: Gui, name: str = None) -> CameraResponse:
         camera_action = CameraAction.Value(action)
-        request = CameraRequest(action=camera_action, name=name)
+        if camera_action in (CameraAction.CAMERA_HIDE, CameraAction.CAMERA_SHOW) and g_ui:
+            g_ui.set_autodisplay(False)
+        if g_ui:
+            autodisplay = g_ui.is_autodisplay()
+        else:
+            autodisplay = False
+        request = CameraRequest(action=camera_action, name=name, autodisplay=autodisplay)
         response = self.client.SetAction(request, wait_for_ready=True)
         self.converter.convert(response, g_ui, self, camera_action)

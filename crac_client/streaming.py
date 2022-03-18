@@ -10,6 +10,8 @@ from werkzeug.serving import make_server
 
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
+global server
+server = None
 
 
 @app.route('/video_feed')
@@ -39,7 +41,8 @@ def start_server(retriever: Retriever):
 
 def stop_server():
     global server
-    server.shutdown()
+    if server:
+        server.shutdown()
 
 
 class ServerThread(Thread):

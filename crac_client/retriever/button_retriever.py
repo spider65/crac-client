@@ -29,7 +29,7 @@ class ButtonRetriever(Retriever):
     }
 
     def setAction(self, action: str, key: ButtonKey, g_ui: Gui):
-        if key is ButtonKey.KEY_DOME_LIGHT:
+        if key is ButtonKey.KEY_DOME_LIGHT and g_ui:
             g_ui.set_autolight(False)
         request = ButtonRequest(action=ButtonAction.Value(action), type=ButtonRetriever.key_to_button_type_conversion[key])
         call_future = self.client.SetAction.future(request, wait_for_ready=True)

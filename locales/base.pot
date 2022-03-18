@@ -51,3 +51,21 @@ msgstr ""
 
 msgid "LABEL_CALIBRATE"
 msgstr ""
+
+msgid "LABEL_TELESCOPE_CONNECTED"
+msgstr ""
+
+msgid "LABEL_TELESCOPE_DISCONNECTED"
+msgstr ""
+
+msgid "LABEL_CAMERA_DISCONNECTED"
+msgstr ""
+
+msgid "LABEL_CAMERA_CONNECTED"
+msgstr ""
+
+msgid "LABEL_CAMERA_HIDDEN"
+msgstr ""
+
+msgid "LABEL_CAMERA_SHOWN"
+msgstr ""

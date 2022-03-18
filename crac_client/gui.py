@@ -54,9 +54,10 @@ class Gui:
                             sg.Button(_name(ButtonLabel.LABEL_CLOSE), key=ButtonKey.KEY_ROOF, metadata="OPEN", disabled=False, size=(8, 1), tooltip="apre il tetto", button_color=("white", "red")),
                         ]]), title="Tetto", pad=(3, 0)),
                         sg.Frame(layout=([[
-                            sg.Button(_name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, metadata="SYNC", disabled=False, size=(8, 1), tooltip='sincronizza il telescopio sulle coordinate di park', button_color=("white", "red")),
-                            sg.Button(_name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, metadata="PARK_POSITION", disabled=False, size=(8, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking', button_color=("white", "red")),
-                            sg.Button(_name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, metadata="FLAT_POSITION", disabled=False, size=(8, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento', button_color=("white", "red"))
+                            sg.Button(_name(ButtonLabel.LABEL_TELESCOPE_DISCONNECTED), key=ButtonKey.KEY_TELESCOPE_CONNECTION_TOGGLE, metadata="TELESCOPE_CONNECT", disabled=True, size=(10, 1), tooltip='connetti crac al telescopio', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_SYNC), key=ButtonKey.KEY_SYNC, metadata="SYNC", disabled=True, size=(8, 1), tooltip='sincronizza il telescopio sulle coordinate di park', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_PARK), key=ButtonKey.KEY_PARK, metadata="PARK_POSITION", disabled=True, size=(8, 1), tooltip='porta il telescopio in posizione di park e disattiva il tracking', button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_FLAT), key=ButtonKey.KEY_FLAT, metadata="FLAT_POSITION", disabled=True, size=(8, 1) , tooltip='porta il telescopio in posizione di flat e disattiva il tracking con il pannello spento', button_color=("white", "red"))
                         ]]), title="Telescopio", pad=(3, 0)),
                         sg.Frame(layout=([[
                             sg.Button(_name(ButtonLabel.LABEL_DISABLE), key=ButtonKey.KEY_CURTAINS, metadata="ENABLE", disabled=True, size=(8, 1), tooltip='clicca per attivare le tendine', button_color=("white", "red")),
@@ -104,10 +105,9 @@ class Gui:
                                 sg.Column(layout=(
                                     [sg.Text('Telescopio', size=(25, 1), justification='center', font=("Helvetica", 12))],
                                     [
-                                        sg.Text(GuiLabel.TELESCOPE_PARKED.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
-                                        sg.Text(GuiLabel.TELESCOPE_SYNC_OFF.value, size=(8, 1), justification='center', font=("Helvetica", 12), key='status-sync', background_color="white", text_color="red")
+                                        sg.Text(GuiLabel.TELESCOPE_DISCONNECTED.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-tele', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_TRACKING_OFF.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-tracking', background_color="white", text_color="red"),
+                                        sg.Text(GuiLabel.TELESCOPE_SLEWING_OFF.value, size=(10, 1), justification='center', font=("Helvetica", 12), key='status-slewing', background_color="white", text_color="red"),
                                     ]
                                 )),
                                 sg.Column(layout=(
@@ -305,80 +305,6 @@ class Gui:
         alpha_w = int(west_steps * float("{0:.3f}".format(self.increm_w)))  # from steps to degree for west
         return alpha_e, alpha_w
 
-    # def update_disable_button_disabled_curtains(self):
-
-    #     """ Update enable button curtains """
-
-    #     self.__toggle_button__(GuiKey.DISABLED_CURTAINS, disabled=True)
-
-    # def update_disable_button_enabled_curtains(self):
-
-    #     """ Update enable button curtains """
-
-    #     self.__toggle_button__(GuiKey.ENABLED_CURTAINS, disabled=True)
-
-    # def update_disable_panel_all(self):
-
-    #     """ Update enable button on panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_panel_on(self):
-
-    #     """ Update enable button on panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.PANEL_OFF, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_panel_off(self):
-
-    #     """ Update disable button off panel flat """
-
-    #     self.__toggle_button__(GuiKey.PANEL_ON, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.PANEL_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_power_switch_on(self):
-
-    #     """ Update enable button on power switch """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_power_switch_off(self):
-
-    #     """ Update disable button off power switch """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_TELE, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_TELE, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_light_on(self):
-
-    #     """ Update enable button on light dome """
-
-    #     self.__toggle_button__(GuiKey.LIGHT_ON, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_light_off(self):
-
-    #     """ Update enable button off light dome """
-
-    #     self.__toggle_button__(GuiKey.LIGHT_ON, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.LIGHT_OFF, disabled=True, button_color=('black', 'red'))
-
-    # def update_disable_button_power_on_ccd(self):
-
-    #     """ Update enable button on auxiliary """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=True, button_color=('white', 'green'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=False, button_color=('black', 'white'))
-
-    # def update_disable_button_power_off_ccd(self):
-
-    #     """ Update enable button off auxiliary """
-
-    #     self.__toggle_button__(GuiKey.POWER_ON_CCD, disabled=False, button_color=('black', 'white'))
-    #     self.__toggle_button__(GuiKey.POWER_OFF_CCD, disabled=True, button_color=('black', 'red'))
-
     def update_status_tracking(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
 
         """ Update Tracking Status """
@@ -390,12 +316,6 @@ class Gui:
         """ Update Slewing Status """
 
         self.win.find_element('status-slewing').Update(status, text_color=text_color, background_color=background_color)
-
-    def update_status_sync(self, status, text_color: str = 'white', background_color: str = 'red') -> None:
-
-        """ Update Sync Status """
-
-        self.win.find_element('status-sync').Update(status, text_color=text_color, background_color=background_color)
 
     def update_curtains_graphic(self, alpha_e: int, alpha_w: int) -> None:
 

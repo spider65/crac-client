@@ -51,3 +51,9 @@ msgstr "Flat"
 
 msgid "LABEL_CALIBRATE"
 msgstr "Calibrazione"
+
+msgid "LABEL_TELESCOPE_CONNECTED"
+msgstr "Connesso"
+
+msgid "LABEL_TELESCOPE_DISCONNECTED"
+msgstr "Disconnesso"

@@ -18,7 +18,7 @@ def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def gen_frames():
-    stream = camera_retriever.video()
+    stream = camera_retriever.video(name="camera1")
     for response in stream:
         if response.status is CameraStatus.CAMERA_DISCONNECTED:
             stream.cancel()

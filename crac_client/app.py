@@ -49,7 +49,7 @@ while True:
         case v if v in [None, GuiKey.EXIT, GuiKey.SHUTDOWN]:
             g_ui = None
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.TELESCOPE_DISCONNECT), autolight=False)
-            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), g_ui=g_ui)
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera1", g_ui=g_ui)
             deque()
             break
         case ButtonKey.KEY_ROOF:
@@ -62,12 +62,12 @@ while True:
             curtains_retriever.setAction(action=g_ui.win[v].metadata)
         case v if v in (ButtonKey.KEY_CAMERA_CONNECTION, ButtonKey.KEY_CAMERA_DISPLAY):
             connection_button = g_ui.win[v]
-            camera_retriever.setAction(action=connection_button.metadata, g_ui=g_ui)
+            camera_retriever.setAction(action=connection_button.metadata, name="camera1", g_ui=g_ui)
         case _:
-            roof_retriever.setAction(RoofAction.Name(RoofAction.CHECK_ROOF))
-            telescope_retriever.setAction(TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), g_ui.is_autolight())
-            curtains_retriever.setAction(CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
-            camera_retriever.setAction(CameraAction.Name(CameraAction.CAMERA_CHECK), g_ui=g_ui)
+            roof_retriever.setAction(action=RoofAction.Name(RoofAction.CHECK_ROOF))
+            telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), autolight=g_ui.is_autolight())
+            curtains_retriever.setAction(action=CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_CHECK), name="camera1", g_ui=g_ui)
             button_retriever.getStatus()
             
     deque()

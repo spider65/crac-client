@@ -45,6 +45,7 @@ class Gui:
         self.delta_pt = 1.5 * self.t
         self.h = int(self.l / 1.8)
         self.was_light_turned_on = False
+        
 #        sg.theme('DarkBlue')
         layout = [
                     [sg.Menu([], tearoff=True)],
@@ -128,7 +129,7 @@ class Gui:
                                     [
                                         sg.Image(filename="temp.png", subsample=1),
                                         sg.Image(filename="wind.png", subsample=1),
-                                        sg.Image(filename="humidity.png", subsample=1)                                       
+                                        sg.Image(filename="humidity.png", subsample=1)
                                     ],
                                 ))
 

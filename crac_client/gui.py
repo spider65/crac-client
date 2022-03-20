@@ -66,12 +66,20 @@ class Gui:
                     ],
                     [
                         sg.Frame(layout=([[
-                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_DISCONNECTED), key=ButtonKey.KEY_CAMERA_CONNECTION, metadata="CAMERA_CONNECT", disabled=False, size=(10, 1), tooltip="connetti alla videocamera", button_color=("white", "red")),
-                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_HIDDEN), key=ButtonKey.KEY_CAMERA_DISPLAY, metadata="CAMERA_SHOW", disabled=True, size=(8, 1), tooltip="mostra la videocamera", button_color=("white", "red")),
-                            sg.Checkbox('Enable Autodisplay', key="autodisplay", default=True, tooltip="le luci della cupola si accendono automaticamente quando il telescopio è in slewing")
-                        ]]), title="Camera", pad=(3, 10))
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_DISCONNECTED), key=ButtonKey.KEY_CAMERA1_CONNECTION, metadata="CAMERA_CONNECT", disabled=False, size=(10, 1), tooltip="connetti alla videocamera", button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_HIDDEN), key=ButtonKey.KEY_CAMERA1_DISPLAY, metadata="CAMERA_SHOW", disabled=True, size=(8, 1), tooltip="mostra la videocamera", button_color=("white", "red")),
+                        ]]), title="Camera 1", pad=(3, 10)),
+                        sg.Frame(layout=([[
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_DISCONNECTED), key=ButtonKey.KEY_CAMERA2_CONNECTION, metadata="CAMERA_CONNECT", disabled=False, size=(10, 1), tooltip="connetti alla videocamera", button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_HIDDEN), key=ButtonKey.KEY_CAMERA2_DISPLAY, metadata="CAMERA_SHOW", disabled=True, size=(8, 1), tooltip="mostra la videocamera", button_color=("white", "red")),
+                        ]]), title="Camera 2", pad=(3, 10)),
+                        sg.Checkbox('Enable Autodisplay', key="autodisplay", default=True, tooltip="le camere mostrano automaticamente le immagini quando il telescopio è in slewing")
                     ],
-
+                    [
+                        sg.Frame(layout=([[
+                            sg.Combo(values=tuple(), size=(35,30), key='camera-combo')
+                        ]]), title="Movimento Camera", pad=(3, 10))
+                    ],
                     [
                         sg.Frame(layout=([[
                             sg.Button(_name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_TELE_SWITCH, metadata="TURN_ON", disabled=False, size=(8, 1), tooltip="accensione alimentarore telescopio", button_color=("white", "red")),

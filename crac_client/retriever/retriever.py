@@ -4,7 +4,7 @@ from crac_client.converter.converter import Converter
 from crac_client.jobs import JOBS
 
 
-logger = logging.getLogger('crac_client.app')
+logger = logging.getLogger(__name__)
 
 
 class Retriever(ABC):

@@ -1,6 +1,8 @@
 import logging
 import logging.config
 
+from crac_client.streaming import start_server, stop_server
+
 
 logging.config.fileConfig('logging.conf')
 
@@ -32,6 +34,7 @@ button_retriever = ButtonRetriever(ButtonConverter())
 telescope_retriever = TelescopeRetriever(TelescopeConverter())
 curtains_retriever = CurtainsRetriever(CurtainsConverter())
 camera_retriever = CameraRetriever(CameraConverter())
+camera_retriever.listCameras()
 
 
 def deque():
@@ -40,6 +43,9 @@ def deque():
         job = JOBS.popleft()
         job['convert'](job['response'], g_ui)
 
+deque()
+
+start_server()
 
 while True:
     timeout = config.Config.getInt("sleep", "automazione")
@@ -50,7 +56,9 @@ while True:
             g_ui = None
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.TELESCOPE_DISCONNECT), autolight=False)
             camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera1", g_ui=g_ui)
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera2", g_ui=g_ui)
             deque()
+            stop_server()
             break
         case ButtonKey.KEY_ROOF:
             roof_retriever.setAction(action=g_ui.win[v].metadata)
@@ -60,14 +68,18 @@ while True:
             telescope_retriever.setAction(action=g_ui.win[v].metadata, autolight=g_ui.is_autolight())
         case v if v in CurtainsRetriever.key_to_curtains_action_conversion:
             curtains_retriever.setAction(action=g_ui.win[v].metadata)
-        case v if v in (ButtonKey.KEY_CAMERA_CONNECTION, ButtonKey.KEY_CAMERA_DISPLAY):
+        case ButtonKey.KEY_CAMERA1_CONNECTION | ButtonKey.KEY_CAMERA1_DISPLAY:
             connection_button = g_ui.win[v]
             camera_retriever.setAction(action=connection_button.metadata, name="camera1", g_ui=g_ui)
+        case ButtonKey.KEY_CAMERA2_CONNECTION | ButtonKey.KEY_CAMERA2_DISPLAY:
+            connection_button = g_ui.win[v]
+            camera_retriever.setAction(action=connection_button.metadata, name="camera2", g_ui=g_ui)
         case _:
             roof_retriever.setAction(action=RoofAction.Name(RoofAction.CHECK_ROOF))
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.CHECK_TELESCOPE), autolight=g_ui.is_autolight())
             curtains_retriever.setAction(action=CurtainsAction.Name(CurtainsAction.CHECK_CURTAIN))
             camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_CHECK), name="camera1", g_ui=g_ui)
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_CHECK), name="camera2", g_ui=g_ui)
             button_retriever.getStatus()
             
     deque()

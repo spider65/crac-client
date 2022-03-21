@@ -36,7 +36,7 @@ class CameraRetriever(Retriever):
             autodisplay = False
         request = CameraRequest(action=camera_action, name=name, autodisplay=autodisplay)
         call_future = self.client.SetAction.future(request, wait_for_ready=True)
-        call_future.add_done_callback(self.callback_cameras_name)
+        call_future.add_done_callback(self.callback)
 
     def listCameras(self):
         call_future = self.client.ListCameras.future(CameraRequest(), wait_for_ready=True)

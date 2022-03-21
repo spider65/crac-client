@@ -52,7 +52,7 @@ def start_server():
     global server_thread
     server_thread = ServerThread(app)
     server_thread.start()
-    webbrowser.open("http://127.0.0.1:5000")
+    webbrowser.open_new(url="http://127.0.0.1:5000")
 
 def stop_server():
     global server_thread

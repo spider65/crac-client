@@ -7,7 +7,6 @@ from crac_protobuf.camera_pb2 import (
     CameraAction,
     CameraRequest,
     CameraResponse,
-    CamerasResponse,
 )
 from crac_protobuf.camera_pb2_grpc import (
     CameraStub,
@@ -25,7 +24,7 @@ class CameraRetriever(Retriever):
         self.client = CameraStub(self.channel)
 
     def video(self, name: str) -> CameraResponse:
-        return self.client.Video(CameraRequest(name=name), wait_for_ready=True)
+        return self.client.Video(CameraRequest(name=name))
 
     def setAction(self, action: str, g_ui: Gui, name: str) -> CameraResponse:
         camera_action = CameraAction.Value(action)
@@ -36,11 +35,11 @@ class CameraRetriever(Retriever):
         else:
             autodisplay = False
         request = CameraRequest(action=camera_action, name=name, autodisplay=autodisplay)
-        response = self.client.SetAction(request, wait_for_ready=True)
-        self.converter.convert(response, g_ui)
+        call_future = self.client.SetAction.future(request, wait_for_ready=True)
+        call_future.add_done_callback(self.callback_cameras_name)
 
     def listCameras(self):
-        call_future = self.client.ListCameras.future(CameraRequest())
+        call_future = self.client.ListCameras.future(CameraRequest(), wait_for_ready=True)
         call_future.add_done_callback(self.callback_cameras_name)
     
     def callback_cameras_name(self, call_future) -> None:

@@ -43,10 +43,7 @@
             try {
                 cameras = await checkLink().then((success) => success.json()).then((body) => body)
             } catch(exception) {
-                if (cameras) {
-                    cameras['Camera 1'].status = 0
-                    cameras['Camera 2'].status = 0
-                }
+                break
             }
 
             if (!cameras) {
@@ -75,5 +72,6 @@
     }
 
     loop()
+
 </script>
 </html>

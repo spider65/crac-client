@@ -27,6 +27,13 @@ from crac_protobuf.roof_pb2 import RoofAction
 from crac_protobuf.telescope_pb2 import TelescopeAction
 
 
+def deque():
+    while len(JOBS) > 0:
+        logger.debug(f"there are {len(JOBS)} jobs")
+        job = JOBS.popleft()
+        job['convert'](job['response'], g_ui)
+
+
 logger = logging.getLogger('crac_client.app')
 g_ui = gui.Gui()
 roof_retriever = RoofRetriever(RoofConverter())
@@ -36,15 +43,7 @@ curtains_retriever = CurtainsRetriever(CurtainsConverter())
 camera_retriever = CameraRetriever(CameraConverter())
 camera_retriever.listCameras()
 
-
-def deque():
-    while len(JOBS) > 0:
-        logger.debug(f"there are {len(JOBS)} jobs")
-        job = JOBS.popleft()
-        job['convert'](job['response'], g_ui)
-
 deque()
-
 start_server()
 
 while True:
@@ -83,4 +82,3 @@ while True:
             button_retriever.getStatus()
             
     deque()
-

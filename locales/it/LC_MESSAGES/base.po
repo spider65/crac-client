@@ -57,3 +57,15 @@ msgstr "Connesso"
 
 msgid "LABEL_TELESCOPE_DISCONNECTED"
 msgstr "Disconnesso"
+
+msgid "LABEL_CAMERA_DISCONNECTED"
+msgstr "Disconnessa"
+
+msgid "LABEL_CAMERA_CONNECTED"
+msgstr "Connessa"
+
+msgid "LABEL_CAMERA_HIDDEN"
+msgstr "Nascosta"
+
+msgid "LABEL_CAMERA_SHOWN"
+msgstr "Visibile"

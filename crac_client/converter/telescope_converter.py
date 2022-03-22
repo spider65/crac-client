@@ -9,15 +9,15 @@ from crac_protobuf.telescope_pb2 import (
     TelescopeResponse,
     TelescopeAction,
 )
-from crac_protobuf.button_pb2 import (
-    ButtonLabel,
-)
+
 
 logger = logging.getLogger(__name__)
 
 
 class TelescopeConverter(Converter):
     def convert(self, response: TelescopeResponse, g_ui: Gui):
+        if g_ui is None:
+            return
         if response.speed is TelescopeSpeed.SPEED_NOT_TRACKING:
             g_ui.update_status_tracking(GuiLabel.TELESCOPE_TRACKING_OFF.value, text_color="red", background_color="white")
             g_ui.update_status_slewing(GuiLabel.TELESCOPE_SLEWING_OFF.value, text_color="red", background_color="white")

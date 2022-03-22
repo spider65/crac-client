@@ -1,5 +1,4 @@
 from crac_client.config import Config
-from crac_client.converter.button_converter import ButtonConverter
 from crac_client.converter.converter import Converter
 from crac_client.gui import Gui
 from crac_client.retriever.retriever import Retriever
@@ -30,7 +29,7 @@ class ButtonRetriever(Retriever):
     }
 
     def setAction(self, action: str, key: ButtonKey, g_ui: Gui):
-        if key is ButtonKey.KEY_DOME_LIGHT:
+        if key is ButtonKey.KEY_DOME_LIGHT and g_ui:
             g_ui.set_autolight(False)
         request = ButtonRequest(action=ButtonAction.Value(action), type=ButtonRetriever.key_to_button_type_conversion[key])
         call_future = self.client.SetAction.future(request, wait_for_ready=True)

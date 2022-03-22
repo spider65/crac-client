@@ -66,6 +66,22 @@ class Gui:
                     ],
                     [
                         sg.Frame(layout=([[
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_DISCONNECTED), key=ButtonKey.KEY_CAMERA1_CONNECTION, metadata="CAMERA_CONNECT", disabled=False, size=(10, 1), tooltip="connetti alla videocamera", button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_HIDDEN), key=ButtonKey.KEY_CAMERA1_DISPLAY, metadata="CAMERA_SHOW", disabled=True, size=(8, 1), tooltip="mostra la videocamera", button_color=("white", "red")),
+                        ]]), title="Camera 1", pad=(3, 10)),
+                        sg.Frame(layout=([[
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_DISCONNECTED), key=ButtonKey.KEY_CAMERA2_CONNECTION, metadata="CAMERA_CONNECT", disabled=False, size=(10, 1), tooltip="connetti alla videocamera", button_color=("white", "red")),
+                            sg.Button(_name(ButtonLabel.LABEL_CAMERA_HIDDEN), key=ButtonKey.KEY_CAMERA2_DISPLAY, metadata="CAMERA_SHOW", disabled=True, size=(8, 1), tooltip="mostra la videocamera", button_color=("white", "red")),
+                        ]]), title="Camera 2", pad=(3, 10)),
+                        sg.Checkbox('Enable Autodisplay', key="autodisplay", default=True, tooltip="le camere mostrano automaticamente le immagini quando il telescopio è in slewing")
+                    ],
+                    [
+                        sg.Frame(layout=([[
+                            sg.Combo(values=tuple(), size=(35,30), key='camera-combo')
+                        ]]), title="Movimento Camera", pad=(3, 10))
+                    ],
+                    [
+                        sg.Frame(layout=([[
                             sg.Button(_name(ButtonLabel.LABEL_OFF), key=ButtonKey.KEY_TELE_SWITCH, metadata="TURN_ON", disabled=False, size=(8, 1), tooltip="accensione alimentarore telescopio", button_color=("white", "red")),
                         ]]), title="Power Telescopio", pad=(3, 10)),
                         sg.Frame(layout=([[
@@ -79,6 +95,7 @@ class Gui:
                             sg.Checkbox('Enable Autolight', key="autolight", default=True, tooltip="le luci della cupola si accendono automaticamente quando il telescopio è in slewing")
                         ]]), title="Luce Cupola", pad=(3, 10))
                     ],
+
                     [
                         sg.Canvas(size=(self.l, self.h), background_color='grey', key='canvas'),
                         sg.Frame(layout=([[
@@ -157,12 +174,24 @@ class Gui:
             when telescope is slewing
         """
 
-        autolight = self.win.find_element('autolight').Get()
-        return autolight
+        return self.win.find_element('autolight').Get()
+
+    def is_autodisplay(self):
+
+        """
+            read the status of the checkbox that enable/disable the 
+            camera autodisplay
+        """
+
+        return self.win.find_element('autodisplay').Get()
     
     def set_autolight(self, checked: bool):
         logger.debug(f"Is inside set_autolight method with checked: {checked}")
         self.win['autolight'](checked)
+    
+    def set_autodisplay(self, checked: bool):
+        logger.debug(f"Is inside set_autodisplay method with checked: {checked}")
+        self.win['autodisplay'](checked)
 
     def base_draw(self) -> None:
         p1 = ((int((self.l / 2) - (self.delta_pt / 2))) - (0.9 * self.t), self.h)

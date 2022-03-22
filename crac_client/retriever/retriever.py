@@ -1,15 +1,14 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import logging
-from typing import Any
-from crac_client.gui import Gui
+from crac_client.converter.converter import Converter
 from crac_client.jobs import JOBS
 
 
-logger = logging.getLogger('crac_client.app')
+logger = logging.getLogger(__name__)
 
 
 class Retriever(ABC):
-    def __init__(self, converter: Any) -> None:
+    def __init__(self, converter: Converter) -> None:
         self.converter = converter
 
     def callback(self, call_future) -> None:

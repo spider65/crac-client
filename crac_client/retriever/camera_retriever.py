@@ -26,7 +26,7 @@ class CameraRetriever(Retriever):
     def video(self, name: str) -> CameraResponse:
         return self.client.Video(CameraRequest(name=name))
 
-    def setAction(self, action: str, g_ui: Gui, name: str) -> CameraResponse:
+    def setAction(self, action: str, name: str, g_ui: Gui = None) -> CameraResponse:
         camera_action = CameraAction.Value(action)
         if camera_action in (CameraAction.CAMERA_HIDE, CameraAction.CAMERA_SHOW) and g_ui:
             g_ui.set_autodisplay(False)

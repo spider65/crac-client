@@ -41,6 +41,8 @@ button_retriever = ButtonRetriever(ButtonConverter())
 telescope_retriever = TelescopeRetriever(TelescopeConverter())
 curtains_retriever = CurtainsRetriever(CurtainsConverter())
 camera_retriever = CameraRetriever(CameraConverter())
+camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_CONNECT), name="camera1")
+camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_CONNECT), name="camera2")
 camera_retriever.listCameras()
 
 deque()
@@ -54,8 +56,8 @@ while True:
         case v if v in [None, GuiKey.EXIT, GuiKey.SHUTDOWN]:
             g_ui = None
             telescope_retriever.setAction(action=TelescopeAction.Name(TelescopeAction.TELESCOPE_DISCONNECT), autolight=False)
-            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera1", g_ui=g_ui)
-            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera2", g_ui=g_ui)
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera1")
+            camera_retriever.setAction(action=CameraAction.Name(CameraAction.CAMERA_DISCONNECT), name="camera2")
             deque()
             stop_server()
             break
@@ -67,10 +69,10 @@ while True:
             telescope_retriever.setAction(action=g_ui.win[v].metadata, autolight=g_ui.is_autolight())
         case v if v in CurtainsRetriever.key_to_curtains_action_conversion:
             curtains_retriever.setAction(action=g_ui.win[v].metadata)
-        case ButtonKey.KEY_CAMERA1_CONNECTION | ButtonKey.KEY_CAMERA1_DISPLAY:
+        case ButtonKey.KEY_CAMERA1_DISPLAY:
             connection_button = g_ui.win[v]
             camera_retriever.setAction(action=connection_button.metadata, name="camera1", g_ui=g_ui)
-        case ButtonKey.KEY_CAMERA2_CONNECTION | ButtonKey.KEY_CAMERA2_DISPLAY:
+        case ButtonKey.KEY_CAMERA2_DISPLAY:
             connection_button = g_ui.win[v]
             camera_retriever.setAction(action=connection_button.metadata, name="camera2", g_ui=g_ui)
         case _:

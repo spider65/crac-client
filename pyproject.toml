@@ -12,6 +12,7 @@ grpcio-tools = "^1.43.0"
 PySimpleGUI = "^4.56.0"
 Flask = "^2.0.3"
 opencv-python = "^4.5.5"
+python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
 

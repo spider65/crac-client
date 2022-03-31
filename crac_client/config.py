@@ -1,6 +1,9 @@
 import configparser
+from dotenv import load_dotenv
 import os
-#from base.singleton import Singleton
+
+
+load_dotenv()
 
 
 class Config:
@@ -33,9 +36,26 @@ class Config:
         if env_value:
             return int(env_value)
         return config.configparser[section].getint(key)
+    
+    @staticmethod
+    def getBoolean(key, section='automazione'):
+        config = Config()
+        env_value = Config.__check_environ__(key, section=section)
+        if env_value is not None:
+            if env_value in ("false", "off", "0", ""):
+                return False
+            else:
+                return True
+        return config.configparser[section].getboolean(key)
 
     @staticmethod
     def __check_environ__(key: str, section='automazione'):
         env_key = section.upper() + '_' + key.upper()
         env_value = os.environ.get(env_key)
         return env_value
+    
+    @staticmethod
+    def get_section(section_name: str):
+        config = Config()
+        section = config.configparser[section_name]
+        return {key: config.getValue(key, section_name) for key in section}

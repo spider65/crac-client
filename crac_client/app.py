@@ -37,17 +37,17 @@ def deque():
 
 def open_vlc(source: str):
     if platform == "linux" or platform == "linux2":
-        pass
+        return subprocess.Popen(["vlc", source])
     elif platform == "darwin":
         return subprocess.Popen(["open", "-na", "VLC", source])
     elif platform == "win32":
         pass
 
-def close_vlc():
+def close_vlc(p: subprocess.Popen):
     if platform == "linux" or platform == "linux2":
-        pass
+        p.terminate()
     elif platform == "darwin":
-        return subprocess.Popen("osascript -e 'quit app \"VLC\"'", shell=True)
+        subprocess.Popen("osascript -e 'quit app \"VLC\"'", shell=True)
     elif platform == "win32":
         pass
 
@@ -93,10 +93,10 @@ while True:
                 stop_server()
             if source1:
                 sleep(1)
-                close_vlc()
+                close_vlc(stream1)
             if source2:
                 sleep(1)
-                close_vlc()
+                close_vlc(stream2)
             break
         case ButtonKey.KEY_ROOF:
             roof_retriever.setAction(action=g_ui.win[v].metadata)

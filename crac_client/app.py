@@ -41,7 +41,7 @@ def open_vlc(source: str):
     elif platform == "darwin":
         return subprocess.Popen(["open", "-na", "VLC", source])
     elif platform == "win32":
-        pass
+        return subprocess.Popen(["C:/Program Files/VideoLAN/VLC/vlc.exe", source])
 
 def close_vlc(p: subprocess.Popen):
     if platform == "linux" or platform == "linux2":
@@ -49,7 +49,7 @@ def close_vlc(p: subprocess.Popen):
     elif platform == "darwin":
         subprocess.Popen("osascript -e 'quit app \"VLC\"'", shell=True)
     elif platform == "win32":
-        pass
+        p.terminate()
 
 
 logger = logging.getLogger('crac_client.app')

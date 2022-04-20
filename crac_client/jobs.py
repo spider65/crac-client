@@ -1,3 +1,4 @@
-from collections import deque
+from queue import Queue
 
-JOBS = deque()
+JOBS = Queue()
+ENABLED = {"camera1": False, "camera2": False}
